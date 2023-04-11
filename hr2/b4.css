@@ -1,0 +1,63 @@
+
+.title {
+    display: flex;
+  justify-content: space-around;
+}
+.title button{
+    margin: 20px;
+    margin-bottom: 10px;
+    padding : 10px 103px;
+    border-radius: 10px;
+    background:  linear-gradient(to right, #7d35b8 , #bb1f8c);
+    color: #fff;
+    font-size: large;
+    border: none;
+
+}
+
+.content{
+    background:  linear-gradient(to right, #7d35b8 , #bb1f8c);
+    width: 70%;
+    margin:0 auto;
+    padding: 5px 10px;  
+    align-items: center ;
+    border-radius: 10px;
+    color: #fff;
+
+}
+.main{
+    width: 70%;
+    height: 300px;
+    margin:0 auto;  
+
+}
+.select{
+    display: flex;
+    justify-content: center ;
+    padding: 10px;
+
+}
+.ot{
+    width: 30px;
+}
+.select p{
+    padding:20px ;
+}
+.content p{
+    font-size: x-large;
+}
+.text{
+    width: 880px;
+    border-radius: 10px;
+    border: none;
+    height: 50px;
+
+}
+
+.select button{
+    width: 180px;
+    height: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: none;
+}
