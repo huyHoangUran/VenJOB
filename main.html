@@ -5,8 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .hiddendiv {display: none; }
+.testA:focus ~ #testA {display: block; }
+.testB:focus ~ #testB {display: block; }
+    </style>
 </head>
 <body>
-    <h1>Main</h1>
+    <div>
+        <a tabindex="1" class="testA">Test A</a> | <a tabindex="2" class="testB">Test B</a>
+        <div class="hiddendiv" id="testA">1</div>
+        <div class="hiddendiv" id="testB">2</div>
+        </div>  
 </body>
 </html>
