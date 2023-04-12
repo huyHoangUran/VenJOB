@@ -1,0 +1,32 @@
+
+  
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid #333;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #333;
+    color: #fff;
+    opacity: 0; /* Ẩn nav bar mặc định */
+    visibility: hidden; /* Ẩn nav bar mặc định */
+    transition: opacity 0.3s ease-in-out; /* Tạo hiệu ứng mượt mà */
+  }
+  
+  .triangle:hover + nav {
+    opacity: 1; /* Hiển thị nav bar khi hover vào .triangle */
+    visibility: visible; /* Hiển thị nav bar khi hover vào .triangle */
+  }
