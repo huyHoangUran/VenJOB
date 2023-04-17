@@ -1,9 +1,0 @@
-    Use ThucTap;
--- a; Find SinhVien whose hotensv start with "Le"
-
-    Select * from SinhVien where hotensv like 'Le%';
-
--- b: Find GiangVien whose hotengv contains the word "Thi" and makhoa is "Bio"
-
-
-
