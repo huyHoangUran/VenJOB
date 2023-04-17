@@ -1,0 +1,22 @@
+a: SELECT * from SinhVien where hotensv like '%Le';
+
+
+
+b: SELECT g.hotengv, k.tenkhoa from GiangVien g inner join Khoa k on g.makhoa = k.makhoa where k.makhoa = 'Geo';
+
+
+c:  SELECT DISTINCT HuongDan.magv, hotengv, tenkhoa 
+ FROM (HuongDan INNER jOIN GiangVien ON HuongDan.magv = GiangVien.magv) INNER JOIN Khoa ON Khoa.makhoa = GiangVien.makhoa
+ Where HuongDan.magv
+ IN (SELECT HuongDan.magv
+ FROM
+    HuongDan
+GROUP BY
+    HuongDan.magv
+HAVING 
+    COUNT(HuongDan.magv) > 1);
+
+
+d: select distinct  DeTai.madt, tendt from HuongDan inner join DeTai on HuongDan.madt = DeTai.madt where HuongDan.madt in( select HuongDan.madt from HuongDan  group by HuongDan.madt having count(HuongDan.madt)>1) 
+EXCEPT
+SELECT HuongDan.madt, DeTai.tendt FROM HuongDan INNER JOIN DeTai on HuongDan.madt = DeTai.madt GROUP BY HuongDan.madt HAVING COUNT(HuongDan.madt) = ( select MAX(mycount) from (select HuongDan.madt, COUNT(HuongDan.madt)  mycount from HuongDan GROUP BY HuongDan.madt) sub);
