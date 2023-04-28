@@ -1,4 +1,5 @@
-KANJI_MAP = { 0 => '〇', 1 => '一', 2 => '二', 3 => '三', 4 => '四', 5 => '五', 6 => '六', 7 => '七', 8 => '八', 9 => '九' }.freeze
+class Convert
+  KANJI_MAP = { 0 => '〇', 1 => '一', 2 => '二', 3 => '三', 4 => '四', 5 => '五', 6 => '六', 7 => '七', 8 => '八', 9 => '九' }.freeze
 KANJI_MAP_REVERSE = KANJI_MAP.invert.freeze
 
 def to_kansuji(number=0)
@@ -79,9 +80,11 @@ def to_number(kansuji)
   number += thousands * 1000 + hundreds * 100 + (tens + 1) * 10 + ones
   number
 end
-
+end
+ 
+conver = Convert.new
 puts "nhap vao so muon chuyen"
-numIn = gets.chomp().to_i
-puts to_kansuji(numIn)
+num = gets.chomp().to_i
+puts conver.to_kansuji(num)
 
 
