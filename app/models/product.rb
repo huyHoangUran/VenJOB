@@ -11,8 +11,7 @@
         before_save :title_to_lowercase
         
         def title_is_shorter_than_description
-            return if title.blank? or description.blank?
-            if description.length <title.length
+            if description.length < title.length
                 errors.add(:description, 'cant be shorter than description')
             end
         end

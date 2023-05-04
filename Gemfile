@@ -15,6 +15,11 @@ gem "sprockets-rails"
 # Use mysql2 as the database for Active Record
 gem 'mysql2', '~> 0.5.2'
 
+
+gem 'sassc', '~> 2.4'
+
+# use slim template 
+gem "slim"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
@@ -60,7 +65,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-
+  gem "better_errors"
+  gem "binding_of_caller"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -78,3 +84,7 @@ end
 
 # byebug
 gem 'byebug', group: :development
+
+# gem 'better_errors', '~> 2.9', group: :development
+# gem 'binding_of_caller', group: :development
+
