@@ -18,7 +18,7 @@ gem 'mysql2', '~> 0.5.2'
 
 gem 'sassc', '~> 2.4'
 
-# use slim template 
+# use slim template
 gem "slim"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
