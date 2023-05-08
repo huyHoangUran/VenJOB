@@ -1,25 +1,28 @@
-= form_with model: @product do |f|
+= form_with(model: @product , data: {turbo: false}) do |f|
   div
     = label_tag(:title, 'Title:')
     = f.text_field :title
-
+    - if @product.errors[:title].any?
+      p.errorss = @product.errors[:title].first
   div
     = f.label :description
     = f.text_field :description
-
-  
+    - if @product.errors[:description].any?
+      p.errorss = @product.errors[:description].first
   div
     = label_tag(:price, 'Price:')
     = f.text_field :price
-
-  div
+    - if @product.errors[:price].any?
+      p.errorss = @product.errors[:price].first
+  div.btn
     = label_tag(:published, 'Published:')
-    = f.text_field :published
-
+    = f.select :published, options_for_select([["show",1],["hide",0]],1),{}
+    - if @product.errors[:published].any?
+      p.errorss = @product.errors[:published].first
   div
     = f.label :category_id
     = f.collection_select :category_id, Category.all, :id, :title, {}, { multiple: true }
-
+    - if @product.errors[:category_id].any?
+      p.errorss = @product.errors[:category_id].first
   div
     = f.submit 'Create'
-    

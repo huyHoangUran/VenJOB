@@ -2,7 +2,7 @@
   div
     = label_tag(:title, 'Title')
     = f.text_field :title,value: @product.title
-
+    
   div
     = label_tag(:description, 'Description')
     = f.text_field :description
@@ -16,6 +16,6 @@
 
   div
     = f.label :category_id
-    = f.collection_select :category_id, Category.all, :id, :title, {}, { multiple: true }
+    = f.select :category_id, options_for_select(Category.all.map{ |c| [c.title, c.id] }, @product.category_ids), {}, { multiple: true }
 
     = f.submit 'Update'

@@ -6,8 +6,10 @@ table.table
                 th  Description
                 th  Price
                 th  Category
-                th  Status
-                th = link_to 'Create',  new_product_path
+                th.listing Status
+                th
+                    div.btn.btn-success 
+                        = link_to 'Create',  new_product_path, style: "color: white; text-decoration: none"
 
     tbody
         - @products.each.with_index do |product, index|
@@ -20,8 +22,14 @@ table.table
                  -product.categories.each do |ct|
                      = ct.title + ' '
                 td = product.published == true ? 'show' : 'hide'
-                td 
-                    = link_to 'Edit', edit_product_path(product)  
+                td  
+                    div.btn.btn-primary
+                        = link_to 'Edit', edit_product_path(product), style: "color: white; text-decoration: none"
                     br
-                    = link_to 'Delete', product_path(product), data: {turbo_method: :delete, turbo_confirm: 'really delete'}
+                    div.btn.btn-danger
+                        = link_to 'Delete', product_path(product), data: {turbo_method: :delete, turbo_confirm: 'really delete'}, style: "color: white; text-decoration: none" 
 
+
+
+div
+    = paginate @products, theme: 'twitter-bootstrap-3'
