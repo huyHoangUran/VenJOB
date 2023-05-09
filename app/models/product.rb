@@ -2,7 +2,8 @@ class Product < ApplicationRecord
   has_many :category_products
   has_many :categories, through: :category_products
   # has_and_belongs_to_many :categories
-
+  # upload image
+  has_one_attached :image
   validate :title_is_shorter_than_description
   validates :title, :description, presence: true
   validates :price, numericality: { greater_than: 0 }

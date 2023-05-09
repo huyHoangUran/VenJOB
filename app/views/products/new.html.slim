@@ -24,5 +24,8 @@
     = f.collection_select :category_id, Category.all, :id, :title, {}, { multiple: true }
     - if @product.errors[:category_id].any?
       p.errorss = @product.errors[:category_id].first
+
+  div 
+    = f.file_field :image
   div
     = f.submit 'Create'

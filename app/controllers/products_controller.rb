@@ -1,5 +1,6 @@
 # require 'byebug'
 class ProductsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @products = Product.all.page(params[:page]).per(3)
   end
@@ -59,6 +60,6 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:title, :description, :price, :published)
+    params.require(:product).permit(:title, :description, :price, :published, :image)
   end
 end

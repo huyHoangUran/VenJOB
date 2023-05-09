@@ -51,7 +51,13 @@ gem 'jquery-rails', '~> 4.4'
 # gemkaminari
 gem 'kaminari'
 
-gem 'bootstrap-kaminari-views'  
+gem 'bootstrap-kaminari-views'
+
+# Gemfile
+gem 'devise', '~> 4.1'
+
+gem 'dotenv-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

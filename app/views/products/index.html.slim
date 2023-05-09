@@ -7,6 +7,7 @@ table.table
                 th  Price
                 th  Category
                 th.listing Status
+                th  image
                 th
                     div.btn.btn-success 
                         = link_to 'Create',  new_product_path, style: "color: white; text-decoration: none"
@@ -22,7 +23,10 @@ table.table
                  -product.categories.each do |ct|
                      = ct.title + ' '
                 td = product.published == true ? 'show' : 'hide'
-                td  
+                / td = product.image
+                td 
+                    = image_tag product.image if product.image.attached?
+                td
                     div.btn.btn-primary
                         = link_to 'Edit', edit_product_path(product), style: "color: white; text-decoration: none"
                     br
