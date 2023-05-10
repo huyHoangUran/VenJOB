@@ -1,0 +1,39 @@
+
+    <table class="container-sm table">
+    <thead>
+          <tr>
+            <th>id</th>
+            <th>Name product</th>
+            <th>description</th>
+            <th>price</th>
+            <th>category</th>
+            <th>status</th>
+            <th><%= link_to('Create',new_product_path)%></th>
+          </tr>
+    </thead>
+    <tbody>
+      <div >
+        <% @products.each.with_index do |product,index| %>
+          <tr>
+            <th scope="row"><%= index+1 %></th>
+            <td> <%= link_to product.title, product_path(product) %></td>
+            <td><%= product.description %></td>
+            <td><%= product.price %></td>
+            <td>
+              <%product.categories.each do |pr|%>
+                  <%= pr.title + ' ,'%>
+              <%end%>
+            </td>
+            <td><%= product.published == true ? 'show' : 'hide' %></td>
+            <td><%= link_to 'Edit', edit_product_path(product) %>
+                <%= link_to 'Delete', product_path(product), data: {turbo_method: :delete, turbo_confirm: 'really delete'}%>
+            </td>
+          </tr>
+        <% end %>
+        <% paginate @products%>
+      </div>
+    </tbody>  
+</table>
+
+
+
