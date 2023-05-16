@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_12_031838) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_16_035717) do
   create_table "jobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.text "benefit"
     t.string "category"
@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_031838) do
     t.string "name"
     t.text "requirement"
     t.text "salary"
-    t.string "type"
+    t.text "type"
     t.string "contact_email"
     t.string "contact_name"
     t.string "contact_phone"
