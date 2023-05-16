@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   resources :jobs do
     collection { post :import }
   end
+  get "search", to: "jobs#search"
+
 end

@@ -1,0 +1,60 @@
+/ = form_tag import_jobs_path, multipart: true do
+/   = file_field_tag :file
+/   = submit_tag "Import" , class: "btn btn-success"
+
+
+/ table.table
+/     thead
+/             tr
+/                 th  ID
+/                 th  Name job
+/                 th  Description
+/                 th  Price
+/                 th  Category
+/                 th.listing Status
+/                 th  image
+/                 th
+/                     div.btn.btn-success 
+/                         = link_to 'Create',  new_job_path, style: "color: white; text-decoration: none"
+
+/     tbody
+/         - @jobs.each.with_index do |job, index|
+/             tr
+/                 td = index+1 
+/                 td = link_to job.salary, job_path(job)
+/                 td = job.description
+/                 / td = job.price
+/                 / td
+/                 /  -job.categories.each do |ct|
+/                 /      = ct.title + ' '
+/                 / td = job.published == true ? 'show' : 'hide'
+/                 / / td = job.image
+/                 / td 
+/                 /     = image_tag job.image if job.image.attached?
+/                 td
+/                     div.btn.btn-primary
+/                         = link_to 'Edit', edit_job_path(job), style: "color: white; text-decoration: none"
+/                     br
+/                     div.btn.btn-danger
+/                         = link_to 'Delete', job_path(job), data: {turbo_method: :delete, turbo_confirm: 'really delete'}, style: "color: white; text-decoration: none" 
+/ div
+/     = paginate @jobs
+
+div.pt-5
+    h5 Key Visual
+    p.text-center  TotalJob: #{  @countJob}
+div.col-md-12.p-5
+    form.d-flex.justify-content-center
+        input.form-control.me-2(type="search" placeholder="Search" aria-label="Search")
+        button.btn.btn-outline-success(type="submit") Search
+- @latestJobs.each.with_index do |job, index|
+  div.col-md-12.text-center
+    h6
+      a.text-dark(href="#") = " #{index+1}: #{job.name}"
+
+h5.pt-5  Top Cities
+div.row
+    - @topCities.each_with_index do |(city, count), index|
+        h6.pt-5.col-md-4.text-center
+            a(href="#") #{index + 1}: #{city || "Other"}
+

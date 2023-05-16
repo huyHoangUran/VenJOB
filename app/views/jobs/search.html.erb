@@ -1,0 +1,14 @@
+	<!--Form search-->
+	<%= form_for search_path, method: :get do |f| %>
+	  <p>
+		<%= f.label "Search for" %>
+		<%= text_field_tag :q, params[:q] %>
+		<%= submit_tag "Go", name: nil %>
+	  </p>
+	<% end %>
+	<!--Hiển thị kết quả tìm kiếm-->
+	<% @search.each_hit_with_result do |hit, job| %>
+	  <h2><%= h job.benefit %></h2>
+	  <h4>(<%= h hit.score %>)</h4>
+	  <p><%= h truncate(job.body, length: 100) %></p>
+	<% end %>

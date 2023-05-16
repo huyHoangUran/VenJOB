@@ -28,14 +28,31 @@ gem 'turbo-rails'
 gem 'stimulus-rails'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
-
+# gem 'jbuilder'
 
 # use gem roo to add file csv
-gem "roo"
+gem 'roo'
+
+# use smarter_csv to add file csv
 
 gem 'smarter_csv'
 
+# use bootstrap
+# gem 'bootstrap'
+gem 'bootstrap', '~> 5.1'
+
+# use sass
+gem 'sass-rails', '~> 6.0'
+
+gem 'slim'
+
+gem 'sassc', '~> 2.4'
+
+gem 'kaminari'
+
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+gem 'progress_bar'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
