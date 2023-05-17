@@ -1,4 +1,5 @@
 class Job < ApplicationRecord
+
   belongs_to :city
   belongs_to :industry
   attribute :type_job, :string, default: ''
@@ -21,4 +22,5 @@ class Job < ApplicationRecord
     text  :requirement, stored: true, boost: 55
     text  :description, stored: true, boost: 50
   end
+
 end
