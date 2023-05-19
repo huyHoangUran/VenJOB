@@ -32,10 +32,9 @@ gem 'jbuilder'
 
 # Solr
 
+gem 'progress_bar'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-gem 'progress_bar'
-
 
 # gem 'activerecord-import'
 gem 'activerecord-import'
@@ -53,7 +52,7 @@ gem 'activerecord-import'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', require: false
+gem 'bootsnap', require: true
 
 # Use Sass to process CSS
 # gem "sassc-rails"
