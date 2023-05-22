@@ -9,41 +9,59 @@
 require 'csv'
 require 'activerecord-import'
 
+Job.delete_all
+Industry.delete_all
+City.delete_all
+
+ActiveRecord::Base.connection.execute('TRUNCATE TABLE jobs;')
+ActiveRecord::Base.connection.execute('TRUNCATE TABLE cities;')
+ActiveRecord::Base.connection.execute('TRUNCATE TABLE industries;')
+
 def normalize_city_name(city_name)
-  case city_name
-  when 'Bắc Cạn'
-    'Bắc Kạn'
-  when 'Xã Xuân Giao'
-    'Lào Cai'
-  when 'Thừa Thiên Huế'
-    'Thừa Thiên - Huế'
-  else
-    city_name.gsub(/[\["\]]/, '')
-  end
+  city_mappings = {
+    'Bắc Cạn' => 'Bắc Kạn',
+    'Xã Xuân Giao' => 'Lào Cai',
+    'Thừa Thiên Huế' => 'Thừa Thiên - Huế'
+  }
+  city_mappings.fetch(city_name, city_name.gsub(/[\["\]]/, ''))
 end
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'jobs.csv'))
 csv = CSV.parse(csv_text, headers: true)
 
-job_counts_by_city = Hash.new(0)
-work_places = {}
-industries = {}
-jobs = []
+# Chuẩn hóa và thêm dữ liệu cho bảng "industry"
+industry_names = csv.map { |row| row['category'] }
+industry_names.map! { |industry_name| industry_name.gsub(/[\["\]]/, '') if industry_name }
+industry_names.uniq!
 
-csv.each do |row|
+industries = industry_names.map do |industry_name|
+  Industry.new(name: industry_name)
+end
+Industry.import industries
+
+# Chuẩn hóa và thêm dữ liệu cho bảng "city"
+city_names = csv.map { |row| normalize_city_name(row['work_place']) }
+city_names.uniq!
+
+cities = city_names.map do |city_name|
+  City.new(name: city_name)
+end
+City.import cities
+
+# Lấy danh sách tất cả các City và Industry đã được tạo
+city_map = City.where(name: city_names).index_by(&:name)
+industry_map = Industry.where(name: industry_names).index_by(&:name)
+
+# Thêm dữ liệu vào bảng "job"
+jobs = csv.map do |row|
   city_name = normalize_city_name(row['work_place'])
   industry_name = row['category']
 
   city_name = normalize_city_name(city_name)
   industry_name = industry_name.gsub(/[\["\]]/, '') if industry_name
 
-  job_counts_by_city[city_name] += 1
-
-  work_place = work_places[city_name] || City.find_or_create_by!(name: city_name)
-  work_places[city_name] = work_place
-
-  industry = industries[industry_name] || Industry.find_or_create_by!(name: industry_name)
-  industries[industry_name] = industry
+  city = city_map[city_name]
+  industry = industry_map[industry_name]
 
   job = Job.new
   job.benefit = row['benefit']
@@ -61,21 +79,40 @@ csv.each do |row|
   job.contact_name = row['contact_name']
   job.contact_phone = row['contact_phone']
 
-  job.city_id = work_place.id
-  job.industry_id = industry.id
+  if city.present?
+    job.city_id = city.id
+  else
+    # Xử lý khi thành phố không tồn tại trong city_map
+    # Có thể bỏ qua công việc hoặc thực hiện xử lý phù hợp tại đây
+  end
 
-  jobs << job
+  job.industry_id = industry.id if industry.present?
+
+  job
 end
 
 Job.import jobs
 Job.reindex
-City.transaction do
-  job_counts_by_city.each do |city_name, job_count|
-    city = City.find_or_create_by(name: city_name)
-    city.update(job_count:)
-  end
+# Lấy danh sách thành phố và số lượng công việc từ trường work_place
+city_counts = Hash.new(0)
+csv.each do |row|
+  city_name = normalize_city_name(row['work_place'])
+  city_counts[city_name] += 1
 end
 
-# Job.delete_all
-# Industry.delete_all
-# WorkPlace.delete_all
+City.transaction do
+  city_counts.each do |city_name, job_count|
+    city = City.find_or_create_by(name: city_name)
+
+    description_search = Job.search do
+      fulltext city_name, fields: [:description]
+    end
+    requirement_search = Job.search do
+      fulltext city_name, fields: [:requirement]
+    end
+
+    city.job_count = job_count + description_search.total + requirement_search.total
+
+    city.save
+  end
+end

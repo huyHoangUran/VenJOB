@@ -10,13 +10,13 @@ class Job < ApplicationRecord
     text  :company_address, stored: true, boost: 80
     text  :company_district, stored: true, boost: 75
     text  :company_province, stored: true, boost: 70
-    text  :requirement, stored: true, boost: 65
-    text  :description, stored: true, boost: 60
-    text  :industry_name, stored: true, boost: 55 do |p|
+    text  :industry_name, stored: true, boost: 65 do |p|
       p.industry.name
     end
-    text :city_name, stored: true, boost: 50 do |p|
+    text :city_name, stored: true, boost: 60 do |p|
       p.city.name if p.city.present?
     end
+    text  :requirement, stored: true, boost: 55
+    text  :description, stored: true, boost: 50
   end
 end
