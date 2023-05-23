@@ -2,6 +2,8 @@ class Job < ApplicationRecord
   belongs_to :city
   belongs_to :industry
   attribute :type_job, :string, default: ''
+  scope :latest_jobs, -> { order(created_at: :desc).limit(5) }
+
   searchable do
     integer :id, stored: true
     text  :name, stored: true, boost: 99
