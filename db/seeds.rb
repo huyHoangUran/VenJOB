@@ -89,6 +89,7 @@ jobs = csv.map do |row|
 
   if city.present?
     job.city_id = city.id
+    job.save 
   else
     # Xử lý khi thành phố không tồn tại trong city_map
     # Có thể bỏ qua công việc hoặc thực hiện xử lý phù hợp tại đây
