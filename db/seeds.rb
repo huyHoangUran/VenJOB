@@ -29,20 +29,28 @@ end
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'jobs.csv'))
 csv = CSV.parse(csv_text, headers: true)
 
-# Chuẩn hóa và thêm dữ liệu cho bảng "industry"
-industry_names = csv.map { |row| row['category'] }
-industry_names.map! { |industry_name| industry_name.gsub(/[\["\]]/, '') if industry_name }
-industry_names.uniq!
+# Chuẩn hóa và thêm dữ liệu cho bảng "industry" và "city"
+industry_names = []
+city_names = []
 
+csv.each do |row|
+  industry_name = row['category'].to_s.gsub(/[\["\]]/, '').strip
+  industry_names << industry_name if industry_name.present?
+
+  city_name = normalize_city_name(row['work_place'])
+  city_names << city_name if city_name.present?
+end
+
+industry_names.uniq!
+city_names.uniq!
+
+# Thêm dữ liệu vào bảng "industry"
 industries = industry_names.map do |industry_name|
   Industry.new(name: industry_name)
 end
 Industry.import industries
 
-# Chuẩn hóa và thêm dữ liệu cho bảng "city"
-city_names = csv.map { |row| normalize_city_name(row['work_place']) }
-city_names.uniq!
-
+# Thêm dữ liệu vào bảng "city"
 cities = city_names.map do |city_name|
   City.new(name: city_name)
 end
@@ -94,19 +102,13 @@ end
 Job.import jobs
 Job.reindex
 # Lấy danh sách thành phố và số lượng công việc từ trường work_place
-# jobs_industry = Industry.all.map do |industry|
-#   job_count = Job.search {
-#     fulltext "\"#{industry.title}\""
-#   }
+jobs_industry = Industry.all.map do |industry|
+  job_count = Job.search { fulltext "\"#{industry.name}\"" }
 
-#   industry.update(job_count: job_count.total)
-#   industry
-# end
-
-
-jobs_city = City.all.map do |city|
-  job_count = Job.search {fulltext "\"#{city.name}\""}
-  city.update(job_count: job_count.total)
-  city
+  industry.update(job_count: job_count.total)
 end
 
+jobs_city = City.all.map do |city|
+  job_count = Job.search { fulltext "\"#{city.name}\"" }
+  city.update(job_count: job_count.total)
+end
