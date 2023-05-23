@@ -94,25 +94,19 @@ end
 Job.import jobs
 Job.reindex
 # Lấy danh sách thành phố và số lượng công việc từ trường work_place
-city_counts = Hash.new(0)
-csv.each do |row|
-  city_name = normalize_city_name(row['work_place'])
-  city_counts[city_name] += 1
+# jobs_industry = Industry.all.map do |industry|
+#   job_count = Job.search {
+#     fulltext "\"#{industry.title}\""
+#   }
+
+#   industry.update(job_count: job_count.total)
+#   industry
+# end
+
+
+jobs_city = City.all.map do |city|
+  job_count = Job.search {fulltext "\"#{city.name}\""}
+  city.update(job_count: job_count.total)
+  city
 end
 
-City.transaction do
-  city_counts.each do |city_name, job_count|
-    city = City.find_or_create_by(name: city_name)
-
-    description_search = Job.search do
-      fulltext city_name, fields: [:description]
-    end
-    requirement_search = Job.search do
-      fulltext city_name, fields: [:requirement]
-    end
-
-    city.job_count = job_count + description_search.total + requirement_search.total
-
-    city.save
-  end
-end

@@ -1,0 +1,15 @@
+<h1>Jobs#search</h1>
+<p>Find me in app/views/jobs/search.html.erb</p>
+	<!--Form search-->
+	<%= form_tag search_path, method: :get do |f| %>
+	  <p>
+		<%= label_tag "Search for" %>
+        <%= text_field_tag :q, params[:q] %>
+        <%= submit_tag "Go", name: nil %>
+	  </p>
+	<% end %>
+	<!--Hiển thị kết quả tìm kiếm-->
+	<% @search.each_hit_with_result do |hit, post| %>
+	  <h2><%= h post.name %></h2>
+	  <p><%= h truncate(post.body, length: 100) %></p>
+	<% end %>
