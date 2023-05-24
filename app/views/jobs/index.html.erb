@@ -23,38 +23,68 @@
       
 
 
+<div>
 
-
-<div class="pt-5 position-relative">
-  <img class="img" src="/images/cover-fb-1m-1.webp" alt="">
-  <div class="overlay" style="margin-bottom: 30px;">
-    <h3 class="text-center">Dòng chữ bên trong ảnh</h3>
+<div class="pt-5 d-flex justify-content-center">
+  <img class="" src="/images/cover-fb-1m-1.webp" alt="">
+  <div class="overlay" style="margin-top: 350px;">
+    <h3 class="text-center"></h3>
   </div>
 </div>
 
 
 <div class=" pt-5 d-flex justify-content-center">
-  <form class="col-md-6" role="search">
+  
     <div class="d-flex align-items-center">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
+  <%= form_tag jobs_path, method: :get do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Nhập từ khóa tìm kiếm" %>
+        <%=  submit_tag "Tìm kiếm" %>
+  <% end %>
     </div>
-  </form>
 </div>
 
 
-  <div class="row">
-              <% @topCities.each.with_index do |item| %>
-                
-                <div class="col-lg-4 col-xl-4 col-md-6">
-                    <div class="single_company">
-                        
-                        <a href="jobs.html"><h3 class="bold"><%= item.name%></h3></a>
-                        <p> <span>50</span> Available position</p>
-                    </div>
-                </div>
-              <% end %>
-                
+
+<div class="row p-5 ">
+  <h3>Latest Jobs</h3>
+  <% @topJobs.each.with_index do |item| %>
+    <div class="col-md-12  d-flex justify-content-center pb-3">
+      <div class="single_company border mx-auto" style="width: 70%;">
+        <a href="jobs.html" >
+          <h3 class=""><%= item.name %></h3>
+        </a>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+  <div class="row p-5 ">
+    <h3>Top Cities</h3>
+    <% @topCities.each.with_index do |item| %>
+      <div class="col-md-4  d-flex justify-content-center pb-3">
+        <div class="single_company border mx-auto" style="width: 70%;">
+          <a href="jobs.html">
+            <h3 class="bold"><%= item.name %></h3>
+          </a>
+          <p><%= item.job_count %></p>
+        </div>
+      </div>
+    <% end %>
   </div>
+  <div class="row p-5 ">
+    <h3>Top Industries</h3>
+    <% @topIndustries.each.with_index do |item| %>
+      <div class="col-md-4  d-flex justify-content-center pb-3">
+        <div class="single_company border mx-auto" style="width: 70%;">
+          <a href="jobs.html">
+            <h3 class="bold"><%= item.name %></h3>
+          </a>
+          <p><%= item.job_count %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
 </div>
 

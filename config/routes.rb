@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'jobs#index'
+  # get '/jobs', to: 'jobs#index', as: 'search_jobs'
 end
