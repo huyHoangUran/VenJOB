@@ -14,4 +14,9 @@ class JobsController < ApplicationController
     @topCities = City.topCities
     @topIndustries = Industry.topIndustries
   end
-end
+
+  def city_list
+    @topCities = City.all
+    render 'jobs/citylist'
+  end
+end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
