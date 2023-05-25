@@ -36,6 +36,11 @@ gem 'progress_bar'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 
+
+gem 'bootstrap', '~> 5.2', '>= 5.2.3'
+
+gem 'kaminari'
+
 # gem 'activerecord-import'
 gem 'activerecord-import'
 

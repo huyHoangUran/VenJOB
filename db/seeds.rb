@@ -1,11 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-
 require 'csv'
 require 'activerecord-import'
 
@@ -52,7 +44,11 @@ Industry.import industries
 
 # Thêm dữ liệu vào bảng "city"
 cities = city_names.map do |city_name|
-  City.new(name: city_name)
+  if city_name == 'Khác'
+    City.new(name: 'Nước ngoài')
+  else
+    City.new(name: city_name)
+  end
 end
 City.import cities
 
@@ -89,7 +85,7 @@ jobs = csv.map do |row|
 
   if city.present?
     job.city_id = city.id
-    job.save 
+    job.save
   else
     # Xử lý khi thành phố không tồn tại trong city_map
     # Có thể bỏ qua công việc hoặc thực hiện xử lý phù hợp tại đây
