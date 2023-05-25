@@ -16,7 +16,7 @@ class JobsController < ApplicationController
   end
 
   def city_list
-    @topCities = City.all
+    @topCities = City.order(job_count: :desc).all.page(params[:page]).per(5)
     render 'jobs/citylist'
   end
-end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+end  

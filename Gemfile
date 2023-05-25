@@ -44,6 +44,11 @@ gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 gem 'kaminari'
 
 gem 'sassc'
+
+# gem 'bootstrap_pagination'
+gem 'bootstrap5-kaminari-views'
+
+# gem 'will_paginate-bootstrap'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
