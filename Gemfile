@@ -37,10 +37,6 @@ gem 'sunspot_rails'
 gem 'sunspot_solr'
 
 
-# gem 'vietnam_city_gem'
-# gem 'vietnamese'
-
-
 
 gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 
