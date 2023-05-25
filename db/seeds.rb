@@ -44,11 +44,7 @@ Industry.import industries
 
 # Thêm dữ liệu vào bảng "city"
 cities = city_names.map do |city_name|
-  if city_name == 'Khác'
-    City.new(name: 'Nước ngoài')
-  else
     City.new(name: city_name)
-  end
 end
 City.import cities
 
