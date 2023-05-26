@@ -19,4 +19,9 @@ class JobsController < ApplicationController
     @topCities = City.order(job_count: :desc).all.page(params[:page]).per(12)
     render 'jobs/citylist'
   end
+  def industry_list
+    @listIndustries = Industry.where.not(name: "Khác").order(job_count: :desc).page(params[:page]).per(12)
+    render 'jobs/industrylist'
+  end
+
 end  
