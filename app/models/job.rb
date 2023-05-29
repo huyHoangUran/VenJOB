@@ -15,6 +15,7 @@ class Job < ApplicationRecord
     text  :company_district, stored: true, boost: 75
     text  :work_place, stored: true, boost: 70
     text  :industry_name, stored: true, boost: 65 do |p|
+
       p.industry.name
     end
     text :city_name, stored: true, boost: 75 do |p|

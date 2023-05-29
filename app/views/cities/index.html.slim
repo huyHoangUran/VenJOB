@@ -1,0 +1,24 @@
+div
+  .p-5
+    h4
+      | City list
+    .row.d-flex.justify-content-center
+      a.col-md-4.text-center.border[href=""]
+        | Viet nam
+      a.col-md-4.text-center.border[href=""]
+        | international
+  .p-5
+    h4
+      | Viet Nam
+    .row.p-5
+      h3
+        | Top Cities
+      - @topCities.each do |item|
+        .col-md-3.d-flex.justify-content-center.pb-3
+          .single_company.border.mx-auto[style="width: 70%;"]
+            a[href="jobs.html"]
+
+            h3.bold
+              = item.name
+            p
+              = item.job_count

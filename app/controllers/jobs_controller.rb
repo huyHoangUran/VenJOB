@@ -10,13 +10,13 @@ class JobsController < ApplicationController
       end.results
     end
     # list cities, job,industry
-    @topJobs = Job.latest_jobs
-    @topCities = City.topCities
-    @topIndustries = Industry.topIndustries
+    @top_jobs = Job.latest_jobs
+    @top_cities = City.top_cities
+    @top_industries = Industry.top_industries
   end
 
-  def city_list
-    @topCities = City.order(job_count: :desc).all.page(params[:page]).per(12)
-    render 'jobs/citylist'
-  end
+
+  
 end  
+
+
