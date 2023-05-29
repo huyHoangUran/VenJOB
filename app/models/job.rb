@@ -9,7 +9,7 @@ class Job < ApplicationRecord
     text  :benefit, stored: true, boost: 85
     text  :company_address, stored: true, boost: 80
     text  :company_district, stored: true, boost: 75
-    text  :company_province, stored: true, boost: 70
+    text  :work_place, stored: true, boost: 70
     text  :industry_name, stored: true, boost: 65 do |p|
       p.industry.name
     end
