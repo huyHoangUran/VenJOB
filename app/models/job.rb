@@ -9,8 +9,12 @@ class Job < ApplicationRecord
     integer :id, stored: true
     text  :name, stored: true, boost: 99
     text  :company_name, stored: true, boost: 90
-    text  :company_address, stored: true, boost: 85
-    text  :industry_name, stored: true, boost: 80 do |p|
+
+    text  :benefit, stored: true, boost: 85
+    text  :company_address, stored: true, boost: 80
+    text  :company_district, stored: true, boost: 75
+    text  :work_place, stored: true, boost: 70
+    text  :industry_name, stored: true, boost: 65 do |p|
       p.industry.name
     end
     text :city_name, stored: true, boost: 75 do |p|
