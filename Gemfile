@@ -43,6 +43,8 @@ gem 'sunspot_solr'
 # gem 'activerecord-import'
 gem 'activerecord-import'
 
+
+gem 'slim', '~> 3.0', '>= 3.0.6'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

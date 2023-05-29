@@ -1,0 +1,42 @@
+div
+  .pt-5.d-flex.justify-content-center
+    img[src="/images/cover-fb-1m-1.webp" alt=""]
+    .overlay[style="margin-top: 350px;"]
+      h3.text-center
+  .pt-5.d-flex.justify-content-center
+    .d-flex.align-items-center
+      = form_tag jobs_path, method: :get do
+        = text_field_tag :search, params[:search], placeholder: "Nhập từ khóa tìm kiếm"
+        =  submit_tag "Tìm kiếm"
+  div.row.p-5
+    h3
+      | Latest Jobs
+    - @top_jobs.each do |item|
+      .col-md-12.justify-content-center.pb-3
+        .single_company.border.mx-auto[style="width: 70%;"]
+          a[href="jobs.html"]
+
+          h3
+            = item.name
+  div.row.p-5
+    h3
+      | Top Cities
+    - @top_cities.each do |item|
+      .col-md-4.justify-content-center.pb-3
+        .single_company.border.mx-auto
+          = link_to "City", "city_path"
+          h3.bold
+            = item.name
+          p
+            = item.job_count
+  div.row.p-5
+    h3
+      | Top Industries
+    - @top_industries.each do |item|
+      .col-md-4.justify-content-center.pb-3
+        .single_company.border.mx-auto[style="width: 70%;"]
+          h3.bold
+            a[href="jobs.html"]
+              = item.name
+          p
+            = item.job_count

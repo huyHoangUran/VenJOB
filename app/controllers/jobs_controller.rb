@@ -10,8 +10,8 @@ class JobsController < ApplicationController
       end.results
     end
     # list cities, job,industry
-    @topJobs = Job.latest_jobs
-    @topCities = City.topCities
-    @topIndustries = Industry.topIndustries
+    @top_jobs = Job.latest_jobs
+    @top_cities = City.top_cities
+    @top_industries = Industry.top_industries
   end
 end
