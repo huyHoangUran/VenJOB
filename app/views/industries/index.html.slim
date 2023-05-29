@@ -1,0 +1,10 @@
+div.p-5
+  .row.p-5
+    h3
+      | List Industries
+    - @list_industries.each do |item|
+      .col-md-3.d-flex.justify-content-center.pb-3
+        .single_company.border.mx-auto[style="width: 70%;"]
+          = link_to item.name
+          p
+            = item.job_count

@@ -1,0 +1,20 @@
+<div class="pt-5 d-flex justify-content-center">
+  <div class="d-flex align-items-center">
+    <%= form_tag('/jobsList', method: :get) do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Nhập từ khóa tìm kiếm" %>
+      <%= submit_tag "Tìm kiếm" %>
+    <% end %>
+  </div>
+</div>
+
+
+<h1>Kết quả tìm kiếm</h1>
+
+<% @jobs.each do |result| %>
+  <div class="result">
+    <h3><%= result.name %></h3>
+    <p><%= result.benefit %></p>
+    <!-- Hiển thị thông tin khác của kết quả -->
+  </div>
+<% end %>
+<%= paginate @jobs, theme: 'bootstrap-5' %>
