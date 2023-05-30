@@ -1,0 +1,33 @@
+.pt-5.d-flex.justify-content-center
+  img[src="/images/cover-fb-1m-1.webp" alt=""]
+  .overlay[style="margin-top: 350px;"]
+    h3.text-center
+.pt-5.d-flex.justify-content-center
+  .d-flex.align-items-center
+    = form_tag city_jobs_path, method: :get do
+      = text_field_tag :city_name, params[:city_name], placeholder: "Nhập từ khóa tìm kiếm"
+      =  submit_tag "Tìm kiếm"
+
+
+.row
+  .col-md-12
+    h3
+      | Total results: 
+      = @total_results
+
+p 
+  = @city_name
+p
+  | Số lượng công việc: 
+  = @job_count
+- if @jobs.present?
+  - @jobs.each do |job|
+    p
+      = job.name
+- else
+  p
+    | Không có công việc trong thành phố này.
+
+= paginate @jobs, theme: 'bootstrap-5'
+
+

@@ -11,15 +11,13 @@ div
     h4
       | Viet Nam
     .row.p-5
-      h3
+      h3.pt-3
         | Top Cities
+        .pt-3
       - @top_cities.each do |item|
         .col-md-3.d-flex.justify-content-center.pb-3
           .single_company.border.mx-auto[style="width: 70%;"]
-            a[href="jobs.html"]
+            = link_to item.name, city_jobs_path(city_name: item.name)
 
-            h3.bold
-              = item.name
             p
               = item.job_count
-              

@@ -23,9 +23,11 @@ class Job < ApplicationRecord
     end
     text  :benefit, stored: true, boost: 70
     text  :company_district, stored: true, boost: 65
-    text  :company_province, stored: true, boost: 60
     text  :requirement, stored: true, boost: 55
     text  :description, stored: true, boost: 50
   end
 
+  def short_description
+    description.first 30
+  end
 end
