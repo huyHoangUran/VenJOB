@@ -28,6 +28,6 @@ class Job < ApplicationRecord
   end
 
   def short_description
-    description.first 30
+    description.first 130
   end
 end

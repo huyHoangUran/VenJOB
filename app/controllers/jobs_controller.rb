@@ -14,84 +14,66 @@ class JobsController < ApplicationController
     @top_industries = Industry.top_industries
   end
 
-  def city_jobs
-    @city_name = params[:city_name]
-    
-      @jobs = Job.search do fulltext "\"#{params[:city_name]}\"" 
-      paginate page: 1, per_page: Job.count
-      end.results
-      @job_count = @jobs.total_count
-      @jobs = Kaminari.paginate_array(@jobs).page(params[:page]).per(10)
-    render 'joblist'
-  end
-  # def city_jobs
-  #   city_name = params[:city_name]
-  #   @city_display = city_name
-  #   if city_name == 'Khác'
-  #     @search = Job.search do
-  #       fulltext "\"#{city_name}\"" do
-  #         fields(:city_name)
-  #       end
-  #       paginate page: 1, per_page: Job.count
-  #     end
-  #   else
-  #     @search = Job.search do 
-  #       fulltext "\"#{city_name}\"" 
-  #       paginate page: 1, per_page: Job.count
-  #     end
-  #   end
-    
-  #   @job_count = @search.results.count
-  #   @jobs = @search.results
-  #   # binding.pry
-  #   render 'joblist'
-  # end
-  # def city_jobs
-  #   city_name = params[:city_name]
-  #   @city_display = city_name
-  
-  #   if city_name.start_with?('"') && city_name.end_with?('"') && city_name.length > 2
-  #     quoted_search_query = city_name[1..-2] # Lấy chuỗi con không bao gồm dấu nháy kép ở đầu và cuối
-  #     @search = Job.search do
-  #       fulltext "\"#{quoted_search_query}\"" do
-  #         fields(:name, :description, :company_name, :benefit, :company_address, :company_district, :work_place,:industry_name, :city_name, :company_district, :requirement).boost(2.0)
-  #       end
-  #       paginate :page => params[:page], :per_page => 20
-  #     end
-  #   else
-  #     @search = Job.search do 
-  #       fulltext city_name do
-  #         fields(:name, :description, :company_name, :benefit, :company_address, :company_district, :work_place,:industry_name, :city_name, :company_district, :requirement)
-  #       end
-  #       paginate :page => params[:page], :per_page => 20
-  #     end
-  #   end
-  
-  #   @jobs = @search.results
-  #   render 'jobs/jobs_list_of_city_industry'
-  # end
   # def city_jobs
   #   @city_name = params[:city_name]
-  
-  #   if @city_name.start_with?('"') && @city_name.end_with?('"') && @city_name.length > 2
-  #     quoted_search_query = @city_name[1..-2] # Remove the double quotes at the beginning and end
-  #     @jobs = Job.search do
-  #       fulltext "\"#{quoted_search_query}\"" do
-  #         fields(:name, :description, :company_name, :benefit, :company_address, :company_district, :work_place, :industry_name, :city_name, :requirement).boost(2.0)
-  #       end
-  #       paginate page: params[:page], per_page: 20
+    
+  #     @jobs = Job.search do fulltext "\"#{params[:city_name]}\"" 
+  #     paginate page: 1, per_page: Job.count
   #     end.results
-  #   else
-  #     @jobs = Job.search do
-  #       fulltext @city_name do
-  #         fields(:name, :description, :company_name, :benefit, :company_address, :company_district, :work_place, :industry_name, :city_name, :requirement).boost(1.0)
-  #       end
-  #       paginate page: params[:page], per_page: 20
-  #     end.results
-  #   end
-  
-  #   @job_count = @jobs.total_count
-  #   @jobs = Kaminari.paginate_array(@jobs).page(params[:page]).per(10)
+  #     @job_count = @jobs.total_count
+  #     @jobs = Kaminari.paginate_array(@jobs).page(params[:page]).per(10)
   #   render 'joblist'
   # end
+  # def city_jobs
+  #   city_name = params[:city_name].to_s
+  #   @city_display = city_name
+  
+  #   @search = Job.search do
+  #     if city_name.present?
+  #       fulltext city_name do
+  #         fields(:city_name)
+  #         phrase_fields(:city_name)
+  #         boost_fields(:city_name => 2.0)
+  #         minimum_match 1
+  #       end
+  #     end
+  #     paginate :page => params[:page], :per_page => 20
+  #   end
+  
+  #   @jobs = @search.results
+  #   @job_count = @search.total
+  
+  #   render 'joblist'
+  # end
+  
+  def city_jobs
+    city_name = params[:city_name]
+    @city_display = city_name
+  
+    @search = Job.search do
+      if city_name.start_with?('"') && city_name.end_with?('"')
+        # Tìm kiếm chính xác cụm từ
+        fulltext city_name do
+          fields(:name,:city_name) # Replace :field1, :field2, :field3 with the actual fields you want to search
+        end
+      else
+        # Tìm kiếm từng từ riêng lẻ
+        keywords "\"#{city_name}\""
+      end
+  
+      paginate page: 1, per_page: Job.count
+    end
+  
+    @jobs = @search.results
+    @job_count = @jobs.count
+    @jobs = Kaminari.paginate_array(@jobs).page(params[:page]).per(20)
+    render 'joblist'
+  end
+  
+  
+  
+  
+  
+  
+  
 end  

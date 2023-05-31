@@ -5,25 +5,40 @@
 .pt-5.d-flex.justify-content-center
   .d-flex.align-items-center
     = form_tag city_jobs_path, method: :get do
-      = text_field_tag :city_name, params[:city_name], placeholder: "Nhập từ khóa tìm kiếm"
+      = text_field_tag :city_name, params[:city_name], placeholder: "Nhập từ khóa tìm kiếm", :class =>"m-3"
       =  submit_tag "Tìm kiếm"
 
 
-.row
-  .col-md-12
-    h3
-      | Total results: 
-      = @total_results
+.row.p-3
+  .col-md-2
+    p.inline
+      | Total results:
+    b.inline
+      = @job_count
 
-p 
-  = @city_name
-p
-  | Số lượng công việc: 
-  = @job_count
+  .col-md-4
+    p.inline 
+      | Result for:
+    b.inline      
+      = @city_display
+
 - if @jobs.present?
   - @jobs.each do |job|
-    p
-      = job.name
+    div.row.p-3
+      div.col-md-10.border
+        h5.text-left 
+          | 
+          = job.name 
+        p
+          =job.short_description + " ....."
+        p
+          = job.company_district.present? ? job.company_district + "," : ""
+          = job.work_place.present? ? job.work_place : ""
+        
+      .col-md-2.border.d-flex.align-items-center.justify-content-center 
+        p
+          |Favourite
+
 - else
   p
     | Không có công việc trong thành phố này.
