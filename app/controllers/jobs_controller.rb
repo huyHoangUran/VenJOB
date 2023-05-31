@@ -51,16 +51,7 @@ class JobsController < ApplicationController
     @city_display = city_name
   
     @search = Job.search do
-      if city_name.start_with?('"') && city_name.end_with?('"')
-        # Tìm kiếm chính xác cụm từ
-        fulltext city_name do
-          fields(:name,:city_name) # Replace :field1, :field2, :field3 with the actual fields you want to search
-        end
-      else
-        # Tìm kiếm từng từ riêng lẻ
-        keywords "\"#{city_name}\""
-      end
-  
+        keywords  city_name
       paginate page: 1, per_page: Job.count
     end
   
@@ -69,11 +60,5 @@ class JobsController < ApplicationController
     @jobs = Kaminari.paginate_array(@jobs).page(params[:page]).per(20)
     render 'joblist'
   end
-  
-  
-  
-  
-  
-  
   
 end  
