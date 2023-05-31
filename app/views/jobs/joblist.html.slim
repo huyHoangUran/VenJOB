@@ -26,9 +26,8 @@
   - @jobs.each do |job|
     div.row.p-3
       div.col-md-10.border
-        h5.text-left 
-          | 
-          = job.name 
+        h5  
+          = link_to job.name, job_path(job.id)
         p
           =job.short_description + " ....."
         p

@@ -28,6 +28,10 @@ class Job < ApplicationRecord
   end
 
   def short_description
-    description.first 130
+    description.present? ? description[0, 130] : ""
   end
+  def short_title
+    name.present? ? name[0, 20] : ""
+  end
+  
 end

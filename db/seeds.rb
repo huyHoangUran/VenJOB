@@ -65,6 +65,7 @@ jobs = csv.map do |row|
     industry.job_count ||= 0
     industry.job_count += 1
   end
+  work_place = row['work_place']&.gsub(/[\["\]]/, '')
 
   job = Job.new(
     benefit: row['benefit'],
@@ -80,7 +81,7 @@ jobs = csv.map do |row|
     contact_email: row['contact_email'],
     contact_name: row['contact_name'],
     contact_phone: row['contact_phone'],
-    work_place: row['work_place'],
+    work_place: work_place ,
   )
 
   job.city_id = city.id if city.present?

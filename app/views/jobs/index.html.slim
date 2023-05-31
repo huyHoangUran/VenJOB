@@ -12,12 +12,10 @@ div
     h3
       | Latest Jobs
     - @top_jobs.each do |item|
-      .col-md-12.justify-content-center.pb-3
+      .col-md-12.justify-content-center.pb-3.text-center
         .single_company.border.mx-auto[style="width: 70%;"]
-          a[href="jobs.html"]
-
-          h3
-            = item.name
+          h5  
+            = link_to item.name, job_path(item.id)
   div.row.p-5
     h3
       | Top Cities
@@ -43,4 +41,4 @@ div
   div.row.p-5
     .col-md-10
     .col-md-2
-      =link_to "Industry list", cities_path,:class =>"color-text btn btn-success"
+      =link_to "Industry list", industries_path,:class =>"color-text btn btn-success"

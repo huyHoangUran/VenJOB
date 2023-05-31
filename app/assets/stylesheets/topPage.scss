@@ -13,8 +13,13 @@ a{
   color: black;
 }
 a:hover{
-  color: black;
+  color: red;
 }
 .inline{
   display: inline;
+}
+.bgc{
+  background-color: black;
+  color: white;
+  border-radius: 12px;
 }
