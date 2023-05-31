@@ -13,7 +13,7 @@ div.p-5
 
   div.row.bgc 
     .col-md-8
-      h1.pb-5
+      h2.pb-5
         | Job name: 
         span
           = @job.name
@@ -35,9 +35,9 @@ div.p-5
         | Desctiption:  
         span
           = @job.description
-    .col-md-2.d-flex.align-items-center.justify-content-center 
-       div.text-right
-        =link_to "Apply", cities_path,:class =>"color-text btn btn-success"
+    .col-md-4.d-flex.align-items-center.justify-content-center 
+       div.text-right.btn.btn-primary
+        =link_to "Apply", cities_path,:class =>"color-text btn btn-primary"
 div.p-5.row
   .col-md-4.d-flex.align-items-center.justify-content-center.btn.btn-success
     div.text-center 
