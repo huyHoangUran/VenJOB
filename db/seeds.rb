@@ -1,118 +1,106 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-
 require 'csv'
-require 'activerecord-import'
 
+puts "Deleting existing data..."
 Job.delete_all
-Industry.delete_all
 City.delete_all
+Industry.delete_all
 
 ActiveRecord::Base.connection.execute('TRUNCATE TABLE jobs;')
 ActiveRecord::Base.connection.execute('TRUNCATE TABLE cities;')
 ActiveRecord::Base.connection.execute('TRUNCATE TABLE industries;')
 
-def normalize_city_name(city_name)
-  city_mappings = {
-    'Bắc Cạn' => 'Bắc Kạn',
-    'Xã Xuân Giao' => 'Lào Cai',
-    'Thừa Thiên Huế' => 'Thừa Thiên - Huế'
-  }
-  city_mappings.fetch(city_name, city_name.gsub(/[\["\]]/, ''))
+csv_file = Rails.root.join("lib/seeds/jobs.csv")
+
+cities_in_VN = ['Hà Nội', 'Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận', 'Cà Mau', 'Cao Bằng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Tĩnh', 'Hải Dương', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên - Huế', 'Tiền Giang', 'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái']
+cities = []
+industries = []
+cities_map = {}
+cities_in_VN.each do |city_name|
+  city = City.new(name: city_name)
+  cities_map[city_name] = city
 end
 
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'jobs.csv'))
-csv = CSV.parse(csv_text, headers: true)
-
-# Chuẩn hóa và thêm dữ liệu cho bảng "industry"
-industry_names = csv.map { |row| row['category'] }
-industry_names.map! { |industry_name| industry_name.gsub(/[\["\]]/, '') if industry_name }
-industry_names.uniq!
-
-industries = industry_names.map do |industry_name|
-  Industry.new(name: industry_name)
-end
-Industry.import industries
-
-# Chuẩn hóa và thêm dữ liệu cho bảng "city"
-city_names = csv.map { |row| normalize_city_name(row['work_place']) }
-city_names.uniq!
-
-cities = city_names.map do |city_name|
-  City.new(name: city_name)
-end
-City.import cities
-
-# Lấy danh sách tất cả các City và Industry đã được tạo
-city_map = City.where(name: city_names).index_by(&:name)
-industry_map = Industry.where(name: industry_names).index_by(&:name)
-
-# Thêm dữ liệu vào bảng "job"
-jobs = csv.map do |row|
-  city_name = normalize_city_name(row['work_place'])
-  industry_name = row['category']
-
-  city_name = normalize_city_name(city_name)
-  industry_name = industry_name.gsub(/[\["\]]/, '') if industry_name
-
-  city = city_map[city_name]
-  industry = industry_map[industry_name]
-
-  job = Job.new
-  job.benefit = row['benefit']
-  job.company_address = row['company_address']
-  job.company_district = row['company_district']
-  job.company_name = row['company_name']
-  job.company_province = row['company_province']
-  job.description = row['description']
-  job.level = row['level']
-  job.name = row['name']
-  job.requirement = row['requirement']
-  job.salary = row['salary']
-  job.type_job = row['type']
-  job.contact_email = row['contact_email']
-  job.contact_name = row['contact_name']
-  job.contact_phone = row['contact_phone']
-
-  if city.present?
-    job.city_id = city.id
-  else
-    # Xử lý khi thành phố không tồn tại trong city_map
-    # Có thể bỏ qua công việc hoặc thực hiện xử lý phù hợp tại đây
-  end
-
-  job.industry_id = industry.id if industry.present?
-
-  job
+CSV.foreach(csv_file, :headers => true) do |row|
+  city = cities_map[row[6]]
+  cities << city if city
+  industries << Industry.new(name: row[1]) unless row[1].nil?
 end
 
-Job.import jobs
+
+  
+# binding.pry
+City.import cities, on_duplicate_key_ignore: true, validate: false
+Industry.import industries, on_duplicate_key_ignore: true, validate: false
+
+hash_industry = Industry.pluck(:name, :id).to_h
+hash_city = City.pluck(:name, :id).to_h
+
+jobs = []
+
+CSV.foreach(csv_file, headers: true) do |row|
+  city_id = hash_city[row[6]]
+  industry_id = hash_industry[row[1]]
+  
+  jobs << Job.new(
+    benefit: row[0],
+    company_address: row[2],
+    company_district: row[3],
+    company_id: row[4],
+    company_name: row[5],
+    description: row[7],
+    level: row[8],
+    name: row[9],
+    requirement: row[10],
+    salary: row[11],
+    type_work: row[12],
+    contact_email: row[13],
+    contact_name: row[14],
+    contact_phone: row[15],
+    work_place: row[16],
+    industry_id: industry_id,
+    city_id: city_id
+  )
+end
+
+Job.import jobs, on_duplicate_key_update: %i[
+  benefit company_address company_district company_id company_name work_place description level name
+  requirement salary type_work contact_email contact_name contact_phone
+], validate: false
+
 Job.reindex
-# Lấy danh sách thành phố và số lượng công việc từ trường work_place
-city_counts = Hash.new(0)
-csv.each do |row|
-  city_name = normalize_city_name(row['work_place'])
-  city_counts[city_name] += 1
-end
 
-City.transaction do
-  city_counts.each do |city_name, job_count|
-    city = City.find_or_create_by(name: city_name)
-
-    description_search = Job.search do
-      fulltext city_name, fields: [:description]
+job_count_of_city = City.all.map do |city|
+  if city.name == 'Khác'
+    job_count = Job.search do
+      fulltext "\"#{city.name}\"" do
+        fields(:city_name)
+      end
     end
-    requirement_search = Job.search do
-      fulltext city_name, fields: [:requirement]
-    end
-
-    city.job_count = job_count + description_search.total + requirement_search.total
-
-    city.save
+  else
+    job_count = Job.search { fulltext "\"#{city.name}\"" }
   end
+  city.job_count = job_count.total
+  city.save
+  city
 end
+
+job_count_of_industry = Industry.all.map do |industry|
+  if industry.name == 'Khác'
+    job_count = Job.search do
+      fulltext "\"#{industry.name}\"" do
+        fields(:industry_name)
+      end
+    end
+  else
+    job_count = Job.search { fulltext "\"#{industry.name}\"" }
+  end
+  industry.job_count = job_count.total
+  industry.save
+  industry
+end
+
+puts "Importing job counts and slugs for cities and industries..."
+City.import job_count_of_city, on_duplicate_key_update: %i[job_count ], validate: false
+Industry.import job_count_of_industry, on_duplicate_key_update: %i[job_count ], validate: false
+
+puts "Data import completed successfully."

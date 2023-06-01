@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_22_020013) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_082124) do
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.integer "job_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
   create_table "industries", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -23,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_020013) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "job_count"
+    t.index ["name"], name: "index_industries_on_name", unique: true
   end
 
   create_table "jobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -35,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_020013) do
     t.string "name"
     t.text "requirement"
     t.text "salary"
-    t.text "type"
+    t.text "type_work"
     t.string "contact_email"
     t.string "contact_name"
     t.string "contact_phone"
@@ -43,7 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_020013) do
     t.integer "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "company_province"
+    t.string "work_place"
+    t.string "company_id"
   end
 
 end
