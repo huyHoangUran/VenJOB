@@ -10,13 +10,25 @@ ActiveRecord::Base.connection.execute('TRUNCATE TABLE industries;')
 
 csv_file = Rails.root.join("lib/seeds/jobs.csv")
 
+
+def map_city_name(city_name)
+  city_mappings = {
+    'Bắc Cạn' => 'Bắc Kạn',
+    'Xã Xuân Giao' => 'Lào Cai',
+    'Thừa Thiên Huế' => 'Thừa Thiên - Huế'
+  }
+  
+  city_mappings.fetch(city_name, city_name.gsub(/[\["\]]/, ''))
+end
+
 cities_in_VN = ['Hà Nội', 'Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận', 'Cà Mau', 'Cao Bằng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Tĩnh', 'Hải Dương', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên - Huế', 'Tiền Giang', 'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái']
 cities = cities_in_VN.map { |city_name| { name: city_name } }
 industries = []
 
 CSV.foreach(csv_file, headers: true) do |row|
   city_name = row[6]
-  cities << { name: city_name }
+  city_name = map_city_name(city_name) unless city_name.nil?
+  cities << { name: city_name } unless city_name.nil?
   industries << { name: row[1] } unless row[1].nil?
 end
 
