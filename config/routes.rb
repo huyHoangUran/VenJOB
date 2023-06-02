@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'search', to: 'jobs#search'
   resources :jobs
   resources :cities
   resources :industries
+  as :user do
+    get "signin" => "devise/sessions#new"
+    post "signin" => "devise/sessions#create"
+  end
+  delete '/users/sign_out', to: 'devise/sessions#destroy'
+
+  
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

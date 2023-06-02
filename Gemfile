@@ -58,6 +58,8 @@ gem 'bootstrap5-kaminari-views'
 
 gem 'slim', '~> 3.0', '>= 3.0.6'
 
+gem 'devise', '~> 4.9', '>= 4.9.2'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
