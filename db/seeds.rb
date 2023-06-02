@@ -74,7 +74,10 @@ Job.import jobs, on_duplicate_key_update: %i[
 
 Job.reindex
 
-job_count_of_city = City.all.map do |city|
+cities = City.includes(:jobs).all
+industries = Industry.includes(:jobs).all
+
+job_count_of_city = cities.map do |city|
   if city.name == 'Khác'
     job_count = Job.search do
       fulltext "\"#{city.name}\"" do
@@ -82,14 +85,15 @@ job_count_of_city = City.all.map do |city|
       end
     end
   else
-    job_count = Job.search { fulltext "\"#{city.name}\"" }
+    job_count = city.jobs.search { fulltext "\"#{city.name}\"" }
   end
+
   city.job_count = job_count.total
   city.save
   city
 end
 
-job_count_of_industry = Industry.all.map do |industry|
+job_count_of_industry = industries.map do |industry|
   if industry.name == 'Khác'
     job_count = Job.search do
       fulltext "\"#{industry.name}\"" do
@@ -97,8 +101,9 @@ job_count_of_industry = Industry.all.map do |industry|
       end
     end
   else
-    job_count = Job.search { fulltext "\"#{industry.name}\"" }
+    job_count = industry.jobs.search { fulltext "\"#{industry.name}\"" }
   end
+
   industry.job_count = job_count.total
   industry.save
   industry
