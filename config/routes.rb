@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   end
   delete '/users/sign_out', to: 'devise/sessions#destroy'
 
-  
+  # config/routes.rb
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

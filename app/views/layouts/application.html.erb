@@ -29,6 +29,9 @@
             <div class="col ">History</div>
         </div>
     </div>
+    <%= form_tag destroy_user_session_path, method: :delete do %>
+                <%= submit_tag "Sign out" %>
+    <% end %>
     <%= yield %>
   </div>
   </body>

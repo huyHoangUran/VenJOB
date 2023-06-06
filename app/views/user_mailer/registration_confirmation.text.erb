@@ -1,0 +1,4 @@
+Xin chào <%= @user.email %>!
+
+Bạn đã đăng ký thành công. Vui lòng xác nhận đăng ký bằng cách truy cập đường dẫn sau:
+<%= edit_user_registration_url(confirmation_token: @user.confirmation_token) %>
