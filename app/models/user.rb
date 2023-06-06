@@ -23,6 +23,6 @@ class User < ApplicationRecord
   end
 
   def send_registration_confirmation_email
-    UserMailer.registration_confirmation(self).deliver_now
+    UserMailer.registration_confirmation(self).deliver_later
   end
 end
