@@ -1,3 +1,3 @@
-<p>Xin chào <%= @user.email %>!</p>
-<p>Bạn đã đăng ký thành công. Vui lòng xác nhận đăng ký bằng cách truy cập đường dẫn sau:</p>
-<p><%= edit_user_registration_url(confirmation_token: @user.confirmation_token) %></p>
+<!-- Trong file views/user_mailer/registration_confirmation.html.erb -->
+<p>Vui lòng nhấp vào liên kết sau để cập nhật thông tin người dùng:</p>
+<p><a href="<%= @confirmation_url %>">Cập nhật thông tin</a></p>
