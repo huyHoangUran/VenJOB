@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_082124) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_021202) do
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.integer "job_count"
@@ -45,8 +45,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_082124) do
     t.integer "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "work_place"
+    t.string "company_province"
     t.string "company_id"
+    t.string "work_place"
   end
 
 end

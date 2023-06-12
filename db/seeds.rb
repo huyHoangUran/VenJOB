@@ -45,7 +45,8 @@ jobs = []
 CSV.foreach(csv_file, headers: true) do |row|
   city_id = hash_city[row[6]]
   industry_id = hash_industry[row[1]]
-  
+  work_place = row[16]
+  work_place = work_place.gsub(/[\[\]"]/, '') unless work_place.nil?
   jobs << Job.new(
     benefit: row[0],
     company_address: row[2],
@@ -61,7 +62,7 @@ CSV.foreach(csv_file, headers: true) do |row|
     contact_email: row[13],
     contact_name: row[14],
     contact_phone: row[15],
-    work_place: row[16],
+    work_place: work_place,
     industry_id: industry_id,
     city_id: city_id
   )
