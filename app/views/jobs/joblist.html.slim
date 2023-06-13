@@ -6,7 +6,7 @@
     h3.text-center
 .pt-2.d-flex.justify-content-center
     .d-flex.align-items-center
-      = form_tag jobs_path,class: "row", method: :get do
+      = form_tag city_jobs_path,class: "row", method: :get do
         .col-md-8 
           = text_field_tag :search, params[:search], class: "form-control", placeholder: "Nhập từ khóa tìm kiếm"
         .col-md-4
