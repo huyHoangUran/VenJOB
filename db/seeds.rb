@@ -1,104 +1,113 @@
 require 'csv'
-require 'activerecord-import'
 
 Job.delete_all
-Industry.delete_all
 City.delete_all
+Industry.delete_all
 
 ActiveRecord::Base.connection.execute('TRUNCATE TABLE jobs;')
 ActiveRecord::Base.connection.execute('TRUNCATE TABLE cities;')
 ActiveRecord::Base.connection.execute('TRUNCATE TABLE industries;')
 
-def normalize_city_name(city_name)
+csv_file = Rails.root.join("lib/seeds/jobs.csv")
+
+
+def map_city_name(city_name)
   city_mappings = {
     'Bắc Cạn' => 'Bắc Kạn',
     'Xã Xuân Giao' => 'Lào Cai',
     'Thừa Thiên Huế' => 'Thừa Thiên - Huế'
-  }
-  city_mappings[city_name] || city_name&.gsub(/[\["\]]/, '')
+  } 
+  city_mappings.fetch(city_name, city_name.gsub(/[\["\]]/, ''))
 end
 
-vietnam_cities = ['Hà Nội', 'Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận', 'Cà Mau', 'Cao Bằng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Tĩnh', 'Hải Dương', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên - Huế', 'Tiền Giang', 'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái']
+cities_in_VN = ['Hà Nội', 'Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ', 'Bắc Giang', 'Bắc Kạn', 'Bạc Liêu', 'Bắc Ninh', 'Bến Tre', 'Bình Định', 'Bình Dương', 'Bình Phước', 'Bình Thuận', 'Cà Mau', 'Cao Bằng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên', 'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Tĩnh', 'Hải Dương', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa', 'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai', 'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị', 'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa', 'Thừa Thiên - Huế', 'Tiền Giang', 'Trà Vinh', 'Tuyên Quang', 'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái']
+cities = cities_in_VN.map { |city_name| { name: city_name } }
+industries = []
 
-# Lưu những thành phố chưa tồn tại trong bảng cities
-new_cities = []
-vietnam_cities.each do |city_name|
-  city = City.find_by(name: city_name)
-  new_cities << City.new(name: city_name) unless city
+CSV.foreach(csv_file, headers: true) do |row|
+  city_name = row[6]
+  city_name = map_city_name(city_name) unless city_name.nil?
+  cities << { name: city_name } unless city_name.nil?
+  industries << { name: row[1] } unless row[1].nil?
 end
-City.import new_cities
 
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'jobs.csv'))
-csv = CSV.parse(csv_text, headers: true)
+City.import cities, on_duplicate_key_ignore: true, validate: false
+Industry.import industries, on_duplicate_key_ignore: true, validate: false
 
-industry_names = csv.map { |row| row['category'].to_s.gsub(/[\["\]]/, '').strip }.uniq
+# binding.pry 
 
-industries = industry_names.map { |industry_name| Industry.new(name: industry_name) }
-Industry.import industries
+hash_industry = Industry.pluck(:name, :id).to_h
+hash_city = City.pluck(:name, :id).to_h
 
-city_names = csv.map { |row| normalize_city_name(row['company_province']) }.uniq
+jobs = []
 
-# Lưu những thành phố chưa tồn tại trong bảng cities
-new_cities = []
-city_names.each do |city_name|
-  city = City.find_by(name: city_name)
-  new_cities << City.new(name: city_name) unless city
-end
-City.import new_cities
-
-city_map = City.where(name: city_names).index_by(&:name)
-
-jobs = csv.map do |row|
-  industry_name = row['category']
-  city_name = normalize_city_name(row['company_province'])
-  industry_name = industry_name.gsub(/[\["\]]/, '') if industry_name
-
-  city = city_map[city_name]
-  industry = Industry.find_by(name: industry_name)
-
-  if city.present? && city_name != 'Khác'
-    city.job_count ||= 0
-    city.job_count += 1
-  end
-
-  if industry.present?
-    industry.job_count ||= 0
-    industry.job_count += 1
-  end
-  work_place = row['work_place']&.gsub(/[\["\]]/, '')
-
-  job = Job.new(
-    benefit: row['benefit'],
-    company_address: row['company_address'],
-    company_district: row['company_district'],
-    company_name: row['company_name'],
-    description: row['description'],
-    level: row['level'],
-    name: row['name'],
-    requirement: row['requirement'],
-    salary: row['salary'],
-    type_job: row['type'],
-    contact_email: row['contact_email'],
-    contact_name: row['contact_name'],
-    contact_phone: row['contact_phone'],
-    work_place: work_place ,
+CSV.foreach(csv_file, headers: true) do |row|
+  city_id = hash_city[row[6]]
+  industry_id = hash_industry[row[1]]
+  work_place = row[16]
+  work_place = work_place.gsub(/[\[\]"]/, '') unless work_place.nil?
+  jobs << Job.new(
+    benefit: row[0],
+    company_address: row[2],
+    company_district: row[3],
+    company_id: row[4],
+    company_name: row[5],
+    description: row[7],
+    level: row[8],
+    name: row[9],
+    requirement: row[10],
+    salary: row[11],
+    type_work: row[12],
+    contact_email: row[13],
+    contact_name: row[14],
+    contact_phone: row[15],
+    work_place: work_place,
+    industry_id: industry_id,
+    city_id: city_id
   )
-
-  job.city_id = city.id if city.present?
-  job.industry_id = industry.id if industry.present?
-
-  job
 end
 
-Job.import jobs
+Job.import jobs, on_duplicate_key_update: %i[
+  benefit company_address company_district company_id company_name work_place description level name
+  requirement salary type_work contact_email contact_name contact_phone
+], validate: false
+
 Job.reindex
 
-Industry.all.each do |industry|
-  job_count = Job.search { fulltext "\"#{industry.name}\"" }
-  industry.update(job_count: job_count.total)
+cities = City.includes(:jobs).all
+industries = Industry.includes(:jobs).all
+
+job_count_of_city = cities.map do |city|
+  if city.name == 'Khác'
+    job_count = Job.search do
+      fulltext "\"#{city.name}\"" do
+        fields(:city_name)
+      end
+    end
+  else
+    job_count = city.jobs.search { fulltext "\"#{city.name}\"" }
+  end
+
+  city.job_count = job_count.total
+  city.save
+  city
 end
 
-City.all.each do |city|
-  job_count = Job.search { fulltext "\"#{city.name}\"" }
-  city.update(job_count: job_count.total)
+job_count_of_industry = industries.map do |industry|
+  if industry.name == 'Khác'
+    job_count = Job.search do
+      fulltext "\"#{industry.name}\"" do
+        fields(:industry_name)
+      end
+    end
+  else
+    job_count = industry.jobs.search { fulltext "\"#{industry.name}\"" }
+  end
+
+  industry.job_count = job_count.total
+  industry.save
+  industry
 end
+
+City.import job_count_of_city, on_duplicate_key_update: %i[job_count ], validate: false
+Industry.import job_count_of_industry, on_duplicate_key_update: %i[job_count ], validate: false
