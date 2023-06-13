@@ -1,0 +1,18 @@
+.cols-border{
+  border-radius: 20px ;
+  border: green solid 4px;
+}
+.icon-20{
+  font-size: 40px;
+}
+.icon-heart {
+  display: none;
+}
+
+.icon-default:hover {
+  display: none;
+}
+
+.icon-default:hover ~ .icon-heart {
+  display: inline;
+}

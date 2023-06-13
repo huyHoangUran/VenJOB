@@ -32,6 +32,7 @@ gem 'jbuilder'
 
 gem 'jquery-rails', '~> 4.4'
 
+gem "font-awesome-sass", "~> 6.4.0"
 
 
 # Solr
