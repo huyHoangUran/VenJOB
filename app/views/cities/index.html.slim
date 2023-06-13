@@ -1,25 +1,25 @@
 div
   .p-5
-    h4
-      | City list
+    h4 City list
     .row.d-flex.justify-content-center
-      a.col-md-4.text-center.border[href=""]
-        | Viet nam
-      a.col-md-4.text-center.border[href=""]
-        | international
-  .p-5
-    h4
-      | Viet Nam
-    .row.p-5
-      h3
-        | Top Cities
-      - @top_cities.each do |item|
-        .col-md-3.d-flex.justify-content-center.pb-3
-          .single_company.border.mx-auto[style="width: 70%;"]
-            a[href="jobs.html"]
+      a.col-md-4.text-center.border href="#vietnam" Viet Nam
+      a.col-md-4.text-center.border href="#international" International
 
-            h3.bold
-              = item.name
-            p
-              = item.job_count
-              
+  div.p-5 id="vietnam"
+    h4 Viet Nam
+    .row.p-5
+      - @Cities.each do |item|
+        .col-md-3.justify-content-center.pb-3
+          .single_company.border.mx-auto
+            a= link_to item.name, :class =>"color-text d-block"
+            p = item.job_count
+
+  div.p-5 id="international"
+    h4 Internationals
+    .row.p-5
+      h3 Top Cities
+      - @CitiesInter.each do |item|
+        .col-md-3.justify-content-center.pb-3
+          .single_company.border.mx-auto
+            = link_to item.name, :class =>"color-text d-block"
+            p = item.job_count
