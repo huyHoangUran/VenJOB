@@ -24,9 +24,7 @@ div
     - @top_cities.each do |item|
       .col-md-4.justify-content-center.pb-3
         .single_company.border.mx-auto
-          = link_to "City", "city_path"
-          h3.bold
-            = item.name
+          = link_to item.name, "city_path"
           p
             = item.job_count
   div.row.p-5
