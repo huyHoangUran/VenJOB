@@ -1,14 +1,7 @@
 class JobsController < ApplicationController
   def index
-    if params[:search].present?
-      @jobs = Job.search do
-        fulltext params[:search] do
-          boost_fields name: 10
-        end
-        order_by(:score, :desc)
-      end.results
-    end
     # list cities, job,industry
+    @job_counts = Job.count
     @top_jobs = Job.latest_jobs
     @top_cities = City.top_cities
     @top_industries = Industry.top_industries
@@ -47,11 +40,26 @@ class JobsController < ApplicationController
   # end
   
   def city_jobs
-    city_name = params[:city_name]
+    city_name = params[:keyword]
     @city_display = city_name
   
     @search = Job.search do
         keywords  city_name
+      paginate page: 1, per_page: Job.count
+    end
+  
+    @jobs = @search.results
+    @job_count = @jobs.count
+    @jobs = Kaminari.paginate_array(@jobs).page(params[:page]).per(20)
+    render 'joblist'
+  end
+
+  def city_search
+    search_keyword = params[:search]
+    @city_display = city_name
+  
+    @search = Job.search do
+      fulltext "\"#{city_name}\""
       paginate page: 1, per_page: Job.count
     end
   
