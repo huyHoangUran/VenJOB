@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       sign_out(resource) 
-      redirect_to thanks_path
+      redirect_to register_path(resource.id)
     else
       clean_up_passwords resource
       set_minimum_password_length

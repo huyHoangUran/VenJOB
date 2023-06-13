@@ -12,26 +12,51 @@
 
   <body>
     <div class="container">
-      <div class="container-fluid">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
-      </div>
+  <div class="container-fluid">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  </div>
 
-    <div class="row ">
-        <div class="col ">  <img class="-4 img img-fluid" src="/images/cover-fb-1m-1.webp" style="padding-left: 45px;" alt=""></div>
-        <div class="col-6 "></div>
-        <div class="col">
-            <div class="col" class ="btn btn-success"><%= link_to 'Sign in', new_user_session_path %></div>
-            <div class="col ">Favorite</div>
-        </div>
-        <div class="col">
-            <div class="col" class ="btn btn-success"><%= link_to 'Register', new_user_registration_path %></div>
-            <div class="col ">History</div>
-        </div>
-    </div>
-    <%= form_tag destroy_user_session_path, method: :delete do %>
-                <%= submit_tag "Sign out" %>
+  <div class="row">
+  <div class="col-3">
+    <%= link_to jobs_path do %>
+      <%= image_tag "/images/cover-fb-1m-1.webp", style: "max-width: 100%; max-height: 100px; padding-left: 45px;", alt: "" %>
     <% end %>
+  </div>
+  <div class="col-4 "></div>
+  <div class="col-4 d-flex flex-column justify-content-center">
+  <% if user_signed_in? %>
+    <div class="row flex-nowrap">
+      <div class="col btn btn-success">
+        <%= form_tag destroy_user_session_path, method: :delete do %>
+                <%= submit_tag "Sign out", class: "btn btn-success" %>
+        <% end %>
+      </div>
+      <div class="col btn btn-success ms-3">Favorite</div>
+      <div class="col btn btn-success ms-3">
+        <%= link_to 'My Page', my_path %>
+      </div>
+      <div class="col btn btn-success ms-3">History</div>
+    </div>
+  <% else %>
+    <div class="row flex-nowrap">
+      <div class="col btn btn-success">
+        <%= link_to 'Sign in', new_user_session_path %>
+      </div>
+      <div class="col btn btn-success ms-3">Favorite</div>
+      <div class="col btn btn-success ms-3">
+        <%= link_to 'Register', new_user_registration_path %>
+      </div>
+      <div class="col btn btn-success ms-3">History</div>
+    </div>
+  <% end %>
+</div>
+</div>
+
+</div>
+
+</div>
+
     <%= yield %>
   </div>
   </body>

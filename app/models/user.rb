@@ -7,9 +7,6 @@ class User < ApplicationRecord
   before_create :generate_confirmation_token
   
   has_one_attached :my_cv
-  # validates :my_cv, presence: true
-  # validates :password, presence: true, if: :password_required?
-  # validates :password_confirmation, presence: true, if: :password_required?
   validates :email, presence: true, uniqueness: true, on: :create
   validates :name, presence: true, length: {maximum: 200}, on: :update
   validates :password, presence: true, length: {minimum: 8}, confirmation: true, on: :update

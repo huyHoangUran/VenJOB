@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   # Tránh xung đột với routes của Devise, đặt các routes của Users trước
-  get 'users/edit', to: 'users#edit', as: :edit_user
-  patch 'users/update', to: 'users#update', as: :update_user
+  get 'my', to: 'users#show'
+  get '/registration/:id', to: 'users#edit', as: :edit_user
+  patch '/registration/:id/update', to: 'users#update', as: :update_user
+
   devise_for :users, controllers: {
     registrations: 'registrations',
   }
@@ -13,7 +15,7 @@ Rails.application.routes.draw do
   # delete '/users/sign_out', to: 'devise/sessions#destroy'
 
   devise_scope :user do
-    get '/thanks', to: 'registrations#thanks', as: :thanks
+    get '/register/:id', to: 'registrations#thanks', as: :register
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

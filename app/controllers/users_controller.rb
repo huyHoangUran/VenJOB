@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+    def show
+      @user = current_user
+    end
+
   def edit
     @user = User.find_by(confirmation_token: params[:confirmation_token])
     
@@ -20,9 +24,15 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         @user.my_cv.attach(params[:user][:my_cv]) if params[:user][:my_cv].present?
         @user.update(confirmed_at: Time.now)
-        redirect_to new_user_session_path
+        sign_in(@user)
+  
+        redirect_to new_user_session_path, notice: 'Password updated successfully.'
       else
-        render json: { error: 'Có lỗi xảy ra khi cập nhật mật khẩu' }, status: :unprocessable_entity
+        @user.errors.add(:base, 'Cập nhật không thành công.')
+        if @user.errors.any?
+          puts @user.errors.full_messages
+        end        
+        redirect_to edit_user_path(@user, confirmation_token: @user.confirmation_token)
       end
     else
       head :not_found

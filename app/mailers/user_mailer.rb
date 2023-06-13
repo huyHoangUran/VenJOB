@@ -9,4 +9,5 @@ class UserMailer < ApplicationMailer
     # Gửi email với đường dẫn xác nhận
     mail(to: @user.email, subject: 'Xác nhận tài khoản')
   end
+  
 end

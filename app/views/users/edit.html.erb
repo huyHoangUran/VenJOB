@@ -1,25 +1,23 @@
 <div class="vh-100 d-flex justify-content-center align-items-center">
   <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
     <h2 class="text-center mb-4 text-primary">Login</h2>
-    <%= form_for @user, url: update_user_path, method: :patch, html: { enctype: "multipart/form-data" }  do |f| %>
+    <%= form_for @user, url: update_user_path, method: :patch,  data: { turbo: false } do |f| %>
       <%= f.hidden_field :confirmation_token, value: @user.confirmation_token %>
       <div class="mb-3">
         <%= f.label :email, class: "form-label" %>
-        <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-info bg-opacity-10 border border-primary" %>
+        <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-info bg-opacity-10 border border-dark", readonly: true %>
         <% if @user.errors[:email].any? %>
-          <div class="text-danger mb-3">
-            <%= @user.errors.full_messages_for(:email).first %>
-          </div>
-        <% end %>
+            <div class="text-danger mb-3">
+              <%= form_error_messages(@user, :email) %>
+            </div>
+          <% end %>
       </div>
       <div class="mb-3">
         <%= f.label :name, class: "form-label" %>
         <%= f.text_field :name, class: "form-control bg-info bg-opacity-10 border border-primary" %>
-        <% if @user.errors[:name].any? %>
-          <div class="text-danger mb-3">
-            <%= @user.errors.full_messages_for(:name).first %>
-          </div>
-        <% end %>
+        <div class="text-danger mb-3">
+          <%= form_error_messages(@user, :email) %>
+        </div>
       </div>
       <div class="mb-3">
         <%= f.label :password, class: "form-label" %>

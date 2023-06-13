@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_023938) do
     t.integer "job_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
   create_table "industries", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -51,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_023938) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "job_count"
+    t.index ["name"], name: "index_industries_on_name", unique: true
   end
 
   create_table "jobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -63,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_023938) do
     t.string "name"
     t.text "requirement"
     t.text "salary"
-    t.text "type"
+    t.text "type_work"
     t.string "contact_email"
     t.string "contact_name"
     t.string "contact_phone"
@@ -72,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_023938) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "work_place"
+    t.string "company_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
