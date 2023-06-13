@@ -5,36 +5,40 @@ div
       h3.text-center
   .pt-5.d-flex.justify-content-center
     .d-flex.align-items-center
-      = form_tag jobs_path, method: :get do
-        = text_field_tag :search, params[:search], placeholder: "Nhập từ khóa tìm kiếm"
+      / = form_tag city_jobs_path, method: :get do
+        = text_field_tag :city_name, params[:city_name], placeholder: "Nhập từ khóa tìm kiếm"
         =  submit_tag "Tìm kiếm"
   div.row.p-5
     h3
       | Latest Jobs
     - @top_jobs.each do |item|
-      .col-md-12.justify-content-center.pb-3
+      .col-md-12.justify-content-center.pb-3.text-center
         .single_company.border.mx-auto[style="width: 70%;"]
-          a[href="jobs.html"]
-
-          h3
-            = item.name
+          h5  
+            = link_to item.name, job_path(item.id)
   div.row.p-5
     h3
       | Top Cities
     - @top_cities.each do |item|
       .col-md-4.justify-content-center.pb-3
         .single_company.border.mx-auto
-          = link_to item.name, "city_path"
+          / = link_to item.name, city_jobs_path(city_name: item.name),:class =>"color-text "
           p
             = item.job_count
+  div.row.p-5
+    .col-md-10
+    .col-md-2
+      / =link_to "City list", cities_path,:class =>"color-text btn btn-success"
   div.row.p-5
     h3
       | Top Industries
     - @top_industries.each do |item|
       .col-md-4.justify-content-center.pb-3
-        .single_company.border.mx-auto[style="width: 70%;"]
-          h3.bold
-            a[href="jobs.html"]
-              = item.name
+        .single_company.border.mx-auto
+          / = link_to item.name, city_jobs_path(city_name: item.name),:class =>"color-text d-block"
           p
             = item.job_count
+  div.row.p-5
+    .col-md-10
+    .col-md-2
+      / =link_to "Industry list", industries_path,:class =>"color-text btn btn-success"
