@@ -8,6 +8,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= yield :stylesheet %>
   </head>
 
   <body>
@@ -26,5 +27,10 @@
     </div>
   </div>
     <%= yield %>
+  <section id="copy-right">
+    <div class="copy-right-sec"><i class="fa-solid fa-copyright"></i>  
+      Degign by hoangnh <%= link_to '|     ZIGExN VeNtura		2023', jobs_path %>
+    </div>
+  </section>
   </body>
 </html>
