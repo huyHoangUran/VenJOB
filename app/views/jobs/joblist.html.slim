@@ -1,8 +1,10 @@
 - content_for :stylesheet do
   = stylesheet_link_tag "topPage"
+- content_for :stylesheet do
+  = stylesheet_link_tag "jobList"
 .pt-5.d-flex.justify-content-center
   img[src="/images/cover-fb-1m-1.webp" alt=""]
-  .overlay[style="margin-top: 350px;"]
+  .overlay
     h3.text-center
 .pt-2.d-flex.justify-content-center
     .d-flex.align-items-center
@@ -11,40 +13,42 @@
           = text_field_tag :search, params[:search], class: "form-control", placeholder: "Nhập từ khóa tìm kiếm"
         .col-md-4
           = submit_tag "Tìm kiếm", class: "btn btn-outline-primary"
+.div.container
+  .row.p-3
+    .col-md-2
+      p.inline
+        | Total results:
+      b.inline
+        = @job_count
 
-.row.p-3
-  .col-md-2
-    p.inline
-      | Total results:
-    b.inline
-      = @job_count
+    .col-md-4
+      p.inline 
+        | Result for:
+      b.inline      
+        = @city_display
 
-  .col-md-4
-    p.inline 
-      | Result for:
-    b.inline      
-      = @city_display
 
-- if @jobs.present?
-  - @jobs.each do |job|
-    div.row.p-3
-      div.col-md-10.border
-        h5  
-          = link_to job.name, job_path(job.id)
-        p
-          =job.short_des + " ....."
-        p
-          = job.company_district.present? ? job.company_district + "," : ""
-          = job.work_place.present? ? job.work_place : ""
-        
-      .col-md-2.border.d-flex.align-items-center.justify-content-center 
-        p
-          |Favourite
-
-- else
-  p
-    | Không có công việc trong thành phố này.
-
-= paginate @jobs, theme: 'bootstrap-5'
+  - if @jobs.present?
+    - @jobs.each do |job|
+      div.row.pb-3.mx-auto
+        div.col-md-9.cols-border
+          h5.text-left 
+            = link_to job.name, job_path(job.id)
+          p
+            =job.short_des + " ....."
+          p
+            = job.company_district.present? ? job.company_district + "," : ""
+            = job.work_place.present? ? job.work_place : ""
+        div.col-md-1 
+        .col-md-2.d-flex.align-items-center.justify-content-center.cols-border
+          p
+            i.icon-default.fa-sharp.fa-solid.fa-star.icon-20
+            i.icon-heart.fa-sharp.fa-solid.fa-heart.icon-20
+            
+  - else
+    p
+      | Không có công việc trong thành phố này.
+div.container
+  = paginate @jobs, theme: 'bootstrap-5'
 
 
