@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   # delete '/users/sign_out', to: 'devise/sessions#destroy'
 
   devise_scope :user do
-    get '/thanks', to: 'registrations#thanks', as: :thanks
+    get '/register/2', to: 'registrations#thanks', as: :thanks
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
