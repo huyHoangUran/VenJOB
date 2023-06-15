@@ -17,12 +17,18 @@ class UsersController < ApplicationController
     @user = User.find_by(confirmation_token: params[:user][:confirmation_token])
   
     if @user.present?
+      # binding.pry
       if @user.update(user_params)
-        @user.my_cv.attach(params[:user][:my_cv]) if params[:user][:my_cv].present?
+        
+        if params[:user][:my_cv].present?
+          @user.my_cv = params[:user][:my_cv] # Gán giá trị mới cho my_cv
+          @user.save
+        end
         @user.update(confirmed_at: Time.now)
         redirect_to new_user_session_path
       else
-        render json: { error: 'Có lỗi xảy ra khi cập nhật mật khẩu' }, status: :unprocessable_entity
+        # binding.pry
+        render :edit
       end
     else
       head :not_found
@@ -34,4 +40,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:password, :password_confirmation, :name, :my_cv)
   end
+  
 end

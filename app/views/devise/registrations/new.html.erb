@@ -8,6 +8,11 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-info bg-opacity-10 border border-primary" %>
+            <span class="error text-danger">
+              <% if resource.errors.has_key?(:email) %>
+                <%= resource.errors[:email].first %>
+              <% end %>
+            </span>
         </div>
         
         <div class="actions d-grid mb-3">

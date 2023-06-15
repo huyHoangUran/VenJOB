@@ -32,6 +32,7 @@ gem 'jbuilder'
 
 gem 'jquery-rails', '~> 4.4'
 
+gem "font-awesome-sass", "~> 6.4.0"
 
 
 # Solr
@@ -60,6 +61,8 @@ gem 'slim', '~> 3.0', '>= 3.0.6'
 
 gem 'devise', '~> 4.9', '>= 4.9.2'
 
+# gem 'carrierwave', '~> 0.11.2'
+gem 'carrierwave', '>= 3.0.0.rc', '< 4.0'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -68,7 +71,7 @@ gem 'devise', '~> 4.9', '>= 4.9.2'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
-
+gem 'pry', '~> 0.14.1'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
@@ -76,7 +79,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootsnap', require: true
 
 
-gem 'pry', '~> 0.10.3'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
