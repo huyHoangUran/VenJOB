@@ -5,6 +5,6 @@ div.p-5
     - @list_industries.each do |item|
       .col-md-3.d-flex.justify-content-center.pb-3
         .single_company.border.mx-auto[style="width: 70%;"]
-          = link_to item.name, city_jobs_path(city_name: item.name),:class =>"color-text d-block"
+          = link_to item.name, city_search_path(city_name: item.name), :class =>"color-text d-block"
           p
             = item.job_count

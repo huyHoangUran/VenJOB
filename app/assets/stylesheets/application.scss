@@ -15,19 +15,50 @@
  */
 
 @import "bootstrap";
-@import "topPage";
-  .overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-      
-  .img {
-    width: 100%;
-    height: 100%;
-  }
+@import "font-awesome";
 
-  .font-size {
-    font-size: 30px;
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
+    
+.img {
+  width: 100%;
+  height: 100%;
+}
+.copy-right-sec{
+  padding: 1.8rem;
+    background: #28a347;
+    color: #fff;
+    text-align: center;
+}
+.copy-right-sec a{
+  color: #fcd462;
+    font-weight: 500;
+}
+a{
+  text-decoration:none;
+}
+.btn-big{
+  width: 220px;
+  height: 220px;
+}
+.btn-se{
+  width: 220px;
+  height: 18ppx;
+}
+.pd{
+  padding: 122px 0 122px 0;
+}
+#copy-right{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.logo{
+  height: 136px;
+  width: 293px;
+}

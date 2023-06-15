@@ -1,25 +1,25 @@
 
-div.p-5
-  nav[aria-label="breadcrumb"]
+div.container
+  nav.pt-3[aria-label="breadcrumb"]
     ol.breadcrumb
       li.breadcrumb-item
-      = link_to  "Home /", jobs_path
+      = link_to  "Home / ", jobs_path
       li.breadcrumb-item
-      = link_to   @job.work_place+ "/", cities_path
+      = link_to   @job.work_place+ " / " , cities_path
       li.breadcrumb-item
-      = link_to   @job.industry.name+ "/", industries_path
+      = link_to   @job.industry.name+ " / ", industries_path
       li.breadcrumb-item.active[aria-current="page"]
       =@job.short_title + " ..."
 
-  div.row.bgc 
-    .col-md-8
-      h2.pb-5
-        | Job name: 
+  div.row
+    .col-md-10
+      h3.pb-5.
+        | Job title: 
         span
           = @job.name
 
       h5.pb-4 
-        | Company name: 
+        | Company : 
         span
           = @job.company_name
       h5.pb-4
@@ -31,20 +31,23 @@ div.p-5
         | Salary:  
         span
           = @job.salary
-      p 
-        | Desctiption:  
-        span
-          = @job.description
-    .col-md-4.d-flex.align-items-center.justify-content-center 
-       div.text-right.btn.btn-primary
-        =link_to "Apply", cities_path,:class =>"color-text btn btn-primary"
-div.p-5.row
-  .col-md-4.d-flex.align-items-center.justify-content-center.btn.btn-success
-    div.text-center 
-    =link_to "Apply", cities_path,:class =>"color-text btn btn-success"
+      h5
+        | Desctiption:
+      - @job.description.split("\n").each do |description|
+        div
+          = description
+    .col-md-2.pt-5.pl-3
+        div.text-right
+          = link_to "Apply", cities_path, class: "color-text d-flex align-items-center justify-content-center btn btn-outline-success btn-big"  
+          
+    
+div.p-5.row.container.mx-auto
   .col-md-4
-  .col-md-4.d-flex.align-items-center.justify-content-center.btn.btn-success  
-    div.text-center 
-    =link_to "Apply", cities_path,:class =>"color-text btn btn-success"
+    div.text-center
+      =link_to "Apply", cities_path,class: "color-text btn btn-success btn-se"
+  .col-md-4
+  .col-md-4  
+    div.text-center.btn-se 
+      =link_to "Favourites", cities_path,class: "color-text btn btn-success btn-se"
 
       
