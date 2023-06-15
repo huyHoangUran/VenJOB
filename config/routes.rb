@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, path: '', path_names: { sign_in: 'log_in' }
+
   get 'search', to: 'jobs#search'
   resources :jobs
   resources :cities
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   # get '/joblist', to: 'jobs#search', as: 'search'
   # get 'search', to: 'jobs#perform_search', as: 'search_jobs'
   get 'city_jobs', to: 'jobs#city_jobs', as: :city_jobs
+  get 'city_search', to: 'jobs#city_search', as: :city_search
 
 
 
