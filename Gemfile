@@ -32,6 +32,7 @@ gem 'jbuilder'
 
 gem 'jquery-rails', '~> 4.4'
 
+gem "font-awesome-sass", "~> 6.4.0"
 
 
 # Solr
@@ -60,6 +61,8 @@ gem 'slim', '~> 3.0', '>= 3.0.6'
 
 gem 'devise', '~> 4.9', '>= 4.9.2'
 
+# gem 'carrierwave', '~> 0.11.2'
+gem 'carrierwave', '>= 3.0.0.rc', '< 4.0'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

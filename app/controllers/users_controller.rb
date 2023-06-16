@@ -21,18 +21,19 @@ class UsersController < ApplicationController
     @user = User.find_by(confirmation_token: params[:user][:confirmation_token])
   
     if @user.present?
+      # binding.pry
       if @user.update(user_params)
-        @user.my_cv.attach(params[:user][:my_cv]) if params[:user][:my_cv].present?
+        
+        if params[:user][:my_cv].present?
+          @user.my_cv = params[:user][:my_cv] # Gán giá trị mới cho my_cv
+          @user.save
+        end
         @user.update(confirmed_at: Time.now)
         sign_in(@user)
   
         redirect_to new_user_session_path, notice: 'Password updated successfully.'
       else
-        @user.errors.add(:base, 'Cập nhật không thành công.')
-        if @user.errors.any?
-          puts @user.errors.full_messages
-        end        
-        redirect_to edit_user_path(@user, confirmation_token: @user.confirmation_token)
+        render :edit
       end
     else
       head :not_found
@@ -44,4 +45,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:password, :password_confirmation, :name, :my_cv)
   end
+  
 end

@@ -3,14 +3,24 @@
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
       <h2 class="text-center mb-4 text-primary">Login</h2>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: "false" } ) do |f| %>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-info bg-opacity-10 border border-primary" %>
+            <span class="error text-danger">
+              <% if resource.errors.has_key?(:email) %>
+                <%= resource.errors[:email].first %>
+              <% end %>
+            </span>
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <%= f.password_field :password, autocomplete: "current-password" , class: "form-control bg-info bg-opacity-10 border border-primary" %>
+            <span class="error text-danger">
+              <% if resource.errors.has_key?(:email) %>
+                <%= resource.errors[:email].first %>
+              <% end %>
+            </span>
 
         </div>
         <div class="mb-3">

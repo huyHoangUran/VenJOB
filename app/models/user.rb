@@ -5,12 +5,14 @@ class User < ApplicationRecord
   :recoverable, :rememberable, :validatable
   after_create :send_registration_confirmation_email       
   before_create :generate_confirmation_token
-  
-  has_one_attached :my_cv
+  validates :my_cv, presence: true
   validates :email, presence: true, uniqueness: true, on: :create
   validates :name, presence: true, length: {maximum: 200}, on: :update
   validates :password, presence: true, length: {minimum: 8}, confirmation: true, on: :update
   validates :password_confirmation, presence: true, on: :update
+
+  # use to upload files
+  mount_uploader :my_cv, MyCvUploader
 
   private
 
