@@ -2,21 +2,20 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'registrations'
   }, path: '', path_names: {
-    sign_in: 'log_in'
+    sign_in: 'log_in',
+    sign_up: 'register/1'
+
   }
   
   get 'search', to: 'jobs#search'
   resources :jobs
   resources :cities
   resources :industries
-  as :user do
-    get "signin" => "devise/sessions#new"
-    post "signin" => "devise/sessions#create"
-  end
+
   delete '/users/sign_out', to: 'devise/sessions#destroy'
 
   devise_scope :user do
-    get '/thanks', to: 'registrations#thanks', as: :thanks
+    get 'register/2', to: 'registrations#thanks'
   end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
