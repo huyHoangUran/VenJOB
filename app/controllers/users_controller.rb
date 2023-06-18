@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         @user.update(confirmed_at: Time.now)
         sign_in(@user)
   
-        redirect_to new_user_session_path, notice: 'Password updated successfully.'
+        redirect_to my_path, notice: 'Password updated successfully.'
       else
         render :edit
       end
@@ -45,5 +45,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:password, :password_confirmation, :name, :my_cv)
   end
-  
+  private
+
+  def confirmation_token_expired?
+    confirmation_sent_at = @user.confirmation_sent_at
+    confirmation_sent_at.present? && confirmation_sent_at < 24.hours.ago
+  end
+    
 end

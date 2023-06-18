@@ -8,7 +8,7 @@
     <label for="email" class="form-label">Email</label>
     <input type="text" name="email" id="email" autofocus="true" autocomplete="name" value="<%= @user.name %>" class="form-control form-control-sm bg-info bg-opacity-10 border border-primary" readonly>
   </div>
-  <p>CV: <%= link_to 'Download CV', @user.name %></p>
+  <p>CV: <%= link_to File.basename(@user.my_cv.path), @user.my_cv.url, target: '_blank', download: File.basename(@user.my_cv.path) %></p>
   <div>
   <div class="row">
     <div col-md-4 >
