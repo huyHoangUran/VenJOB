@@ -13,11 +13,8 @@ Rails.application.routes.draw do
   resources :jobs
   resources :cities
   resources :industries
- 
-  # delete '/users/sign_out', to: 'devise/sessions#destroy'
-
   devise_scope :user do
-    get '/register/2', to: 'registrations#thanks', as: :thanks
+    get 'register/2', to: 'registrations#thanks'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
