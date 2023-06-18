@@ -40,5 +40,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:password, :password_confirmation, :name, :my_cv)
   end
-  
+  private
+
+  def confirmation_token_expired?
+    confirmation_sent_at = @user.confirmation_sent_at
+    confirmation_sent_at.present? && confirmation_sent_at < 24.hours.ago
+  end
+    
 end

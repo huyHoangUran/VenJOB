@@ -5,8 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
     resource.save
     yield resource if block_given?
     if resource.persisted?
-      resource.send_confirmation_instructions
-      sign_out(resource) 
+      sign_out(resource)
       redirect_to register_2_path
     else
       clean_up_passwords resource
@@ -14,9 +13,4 @@ class RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
   end
-
-  def thanks
-    render :thanks
-  end
-
 end
