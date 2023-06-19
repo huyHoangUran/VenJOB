@@ -5,14 +5,4 @@
 .icon-20{
   font-size: 40px;
 }
-.icon-heart {
-  display: none;
-}
 
-.icon-default:hover {
-  display: none;
-}
-
-.icon-default:hover ~ .icon-heart {
-  display: inline;
-}

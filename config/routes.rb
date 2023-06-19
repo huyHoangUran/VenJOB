@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   get 'registration/3', to: 'users#edit'
   patch 'users/update', to: 'users#update', as: :update_user
   devise_for :users, controllers: {
-    registrations: 'registrations'
+    registrations: 'registrations',
+    passwords: 'passwords'
   }, path: '', path_names: {
     sign_in: 'log_in',
-    sign_up: 'register/1'
+    sign_up: 'register/1',
+    password: 'password' # Thêm đoạn này để định nghĩa đường dẫn cho actions của PasswordsController
   }
   
   get 'search', to: 'jobs#search'

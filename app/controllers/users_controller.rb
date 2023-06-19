@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-    def show
-      @user = current_user
-    end
+  skip_before_action :verify_authenticity_token
+  def show
+    @user = current_user
+  end
 
   def edit
     @user = User.find_by(confirmation_token: params[:confirmation_token])
