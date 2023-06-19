@@ -43,17 +43,20 @@
         div.col-md-1 
         .col-md-2.d-flex.align-items-center.justify-content-center.cols-border 
           p
-          - if current_user
-            - if current_user.favourites.exists?(job_id: job.id)
-              = form_with(url: favourite_path(current_user.favourites.find_by(job_id: job.id)), method: :delete, local: true) do |form|
-                = form.button class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
-                  i.fa-sharp.fa-regular.fa-heart
+            - if current_user
+              - if current_user.favourites.exists?(job_id: job.id)
+                = form_with(url: favourite_path(current_user.favourites.find_by(job_id: job.id)), method: :delete, local: true) do |form|
+                  = form.button class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+                    i.fa-sharp.fa-regular.fa-heart
+              - else
+                = form_with(url: favourites_path, method: :post, local: true) do |form|
+                  = form.hidden_field :user_id, value: current_user.id
+                  = form.hidden_field :job_id, value: job.id
+                  = form.button class: 'btn btn-success', data: { confirm: 'Are you sure?' } do
+                    i.fa-sharp.fa-solid.fa-heart
             - else
-              = form_with(url: favourites_path, method: :post, local: true) do |form|
-                = form.hidden_field :user_id, value: current_user.id
-                = form.hidden_field :job_id, value: job.id
-                = form.button class: 'btn btn-success', data: { confirm: 'Are you sure?' } do
-                  i.fa-sharp.fa-solid.fa-heart
+              = link_to 'Favourite', new_user_session_path, class: 'btn btn-success'
+
   - else
     p
       | Không có công việc trong thành phố này.

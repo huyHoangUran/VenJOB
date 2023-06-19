@@ -55,12 +55,12 @@ div.p-5.row.container.mx-auto
         = form_with(url: favourite_path(current_user.favourites.find_by(job_id: @job.id)), method: :delete, local: true) do |form|
           = form.button class: 'btn btn-danger btn-se"', data: { confirm: 'Are you sure?' } do
             | Delete
-
       - else
         = form_with(url: favourites_path, method: :post, local: true) do |form|
           = form.hidden_field :user_id, value: current_user.id
           = form.hidden_field :job_id, value: @job.id
           = form.button class: 'btn btn-success btn-se"', data: { confirm: 'Are you sure?' } do
               | Favourites
-
+    - else              
+       = link_to 'Favourites', new_user_registration_path, class: 'btn btn-success btn-se'
       

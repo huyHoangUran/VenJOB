@@ -42,8 +42,10 @@ h1.pt-5.d-flex.align-items-center.justify-content-center
                 = form.hidden_field :job_id, value: job.job.id
                 = form.button class: 'btn btn-success', data: { confirm: 'Are you sure?' } do
                   i.fa-sharp.fa-solid.fa-heart
+          - else 
+              = link_to 'Favourite', new_user_session_path, class: 'btn btn-success'
     div.row
-      div.col-12.text-center.mt-4
+      div.col-12.text-center.mt-4.pb-5
         = link_to 'Apply', '#', class: 'btn btn-primary btn-se'
    
 - else
