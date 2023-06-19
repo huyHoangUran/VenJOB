@@ -62,6 +62,8 @@ gem 'slim', '~> 3.0', '>= 3.0.6'
 gem 'devise', '~> 4.9', '>= 4.9.2'
 
 gem 'carrierwave', '>= 3.0.0.rc', '< 4.0'
+
+gem 'file_validators'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

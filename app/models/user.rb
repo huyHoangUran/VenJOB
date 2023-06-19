@@ -10,10 +10,11 @@ class User < ApplicationRecord
 
   # use to upload files
   mount_uploader :my_cv, MyCvUploader
-
-  private
-
-  def password_required?
-    false
-  end
+  validates :my_cv, file_size: { less_than_or_equal_to: 3.megabytes, message: "size exceeds the maximum limit (5MB)" },
+                file_content_type: { allow: ['application/msword', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip'], message: "has an invalid format" },
+                allow_blank: true,
+                on: :update
+  
+  
+  
 end
