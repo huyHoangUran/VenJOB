@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'register/2', to: 'registrations#thanks'
     get '/forgot_password', to: 'passwords#new'
+    post '/forgot_password', to: 'passwords#create'
+    get '/reset_password', to:'passwords#edit'
+    put '/reset_password', to:'passwords#update'
   end
   resources :favourites, only: [:create, :destroy, :index]
 

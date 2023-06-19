@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :favourites
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :validatable, :confirmable
-  validates :email, presence: true, uniqueness: true, on: :create
+  # validates :email, presence: true, uniqueness: true, on: :create
   validates :name, presence: true, length: {maximum: 200}, on: :update
   validates :password, presence: true, length: {minimum: 8}, confirmation: true, on: :update
   validates :password_confirmation, presence: true, on: :update
