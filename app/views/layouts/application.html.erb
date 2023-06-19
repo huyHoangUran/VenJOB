@@ -22,7 +22,10 @@
       <% end %>
 
       <div class="row mx-auto ">
-          <div class="col-3 p-0">  <img class="img img-fluid logo" src="/images/cover-fb-1m-1.webp"  alt=""></div>
+          <div class="col-3 p-0">
+            <%= link_to image_tag('/images/cover-fb-1m-1.webp', class: 'img img-fluid logo'), jobs_path %>
+          </div>
+
           <div class="col-4 "></div>
           <div class="col-5 d-flex flex-column justify-content-center">
             <% if user_signed_in? %>
@@ -32,7 +35,9 @@
                           <%= submit_tag "Sign out", class: "btn btn-success" %>
                   <% end %>
                 </div>
-                <div class="col btn btn-success ms-3">Favorite</div>
+                <div class="col btn btn-success ms-3">
+                  <%= link_to 'Favourites', favourites_path %>
+                </div>
                 <div class="col btn btn-success ms-3">
                   <%= link_to 'My Page' %>
                 </div>
@@ -40,10 +45,12 @@
               </div>
             <% else %>
               <div class="row flex-nowrap">
-                <div class="col btn btn-success">
+                <div class="col btn btn-success ms-3">
                   <%= link_to 'Sign in', new_user_session_path %>
                 </div>
-                <div class="col btn btn-success ms-3">Favorite</div>
+                <div class="col btn btn-success ms-3">
+                  <%= link_to 'Favourites', new_user_session_path %>
+                </div>
                 <div class="col btn btn-success ms-3">
                   <%= link_to 'Register', new_user_registration_path %>
                 </div>

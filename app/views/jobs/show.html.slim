@@ -1,4 +1,7 @@
-
+- content_for :stylesheet do
+  = stylesheet_link_tag "jobList"
+- content_for :stylesheet do
+  = stylesheet_link_tag "topPage"
 div.container
   nav.pt-3[aria-label="breadcrumb"]
     ol.breadcrumb
@@ -47,7 +50,17 @@ div.p-5.row.container.mx-auto
       =link_to "Apply", cities_path,class: "color-text btn btn-success btn-se"
   .col-md-4
   .col-md-4  
-    div.text-center.btn-se 
-      =link_to "Favourites", cities_path,class: "color-text btn btn-success btn-se"
+    - if current_user
+      - if current_user.favourites.exists?(job_id: @job.id)
+        = form_with(url: favourite_path(current_user.favourites.find_by(job_id: @job.id)), method: :delete, local: true) do |form|
+          = form.button class: 'btn btn-danger btn-se"', data: { confirm: 'Are you sure?' } do
+            | Delete
+
+      - else
+        = form_with(url: favourites_path, method: :post, local: true) do |form|
+          = form.hidden_field :user_id, value: current_user.id
+          = form.hidden_field :job_id, value: @job.id
+          = form.button class: 'btn btn-success btn-se"', data: { confirm: 'Are you sure?' } do
+              | Favourites
 
       

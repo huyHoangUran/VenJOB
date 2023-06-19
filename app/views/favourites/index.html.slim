@@ -1,0 +1,51 @@
+- content_for :stylesheet do
+  = stylesheet_link_tag "topPage"
+- content_for :stylesheet do
+  = stylesheet_link_tag "jobList"
+- content_for :stylesheet do
+  = stylesheet_link_tag "frjob"
+h1.pt-5.d-flex.align-items-center.justify-content-center 
+  | My Favourtites Job
+
+- if @jobs.present?
+    - @jobs.each do |job|
+      div.row.p-3.mx-auto
+        div.col-md-2.cols-border.d-flex.justify-content-center
+          = check_box_tag 'checkbox_name', 'checkbox_value' 
+        div.col-md-1
+        div.col-md-6.cols-border
+          h5.text-left 
+            | Job title:  
+            = link_to job.job.name, job_path(job.job.id)
+          p
+            | Description: 
+            - if job.job.short_des.present?
+              = job.job.short_des + " ....."
+          p
+            | Location: 
+            = job.job.company_district.present? ? job.job.company_district + "," : ""
+            = job.job.work_place.present? ? job.job.work_place : ""
+          p 
+            | Salary: 
+            = job.job.salary
+        div.col-md-1 
+        .col-md-2.d-flex.align-items-center.justify-content-center.cols-border 
+          p
+          - if current_user
+            - if current_user.favourites.exists?(job_id: job.job.id)
+              = form_with(url: favourite_path(current_user.favourites.find_by(job_id: job.job.id)), method: :delete, local: true) do |form|
+                = form.button class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+                  i.fa-sharp.fa-regular.fa-heart
+            - else
+              = form_with(url: favourites_path, method: :post, local: true) do |form|
+                = form.hidden_field :user_id, value: current_user.id
+                = form.hidden_field :job_id, value: job.job.id
+                = form.button class: 'btn btn-success', data: { confirm: 'Are you sure?' } do
+                  i.fa-sharp.fa-solid.fa-heart
+    div.row
+      div.col-12.text-center.mt-4
+        = link_to 'Apply', '#', class: 'btn btn-primary btn-se'
+   
+- else
+    p
+      | Không có công việc trong thành phố này.
