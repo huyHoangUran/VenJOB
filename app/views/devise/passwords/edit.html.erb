@@ -4,14 +4,6 @@
   
   <%= f.hidden_field :reset_password_token %>
   
-  <% if @user_email.present? %>
-    <p>Reset password for <%= @user_email %></p>
-  <% else %>
-    <p>Invalid or expired reset password token</p>
-  <% end %>
-
-
-
 
   <div class="field">
     <%= f.label :password, "New password" %><br />

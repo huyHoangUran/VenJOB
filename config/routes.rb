@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :industries
   devise_scope :user do
     get 'register/2', to: 'registrations#thanks'
+    get '/forgot_password', to: 'passwords#new'
   end
   resources :favourites, only: [:create, :destroy, :index]
 
