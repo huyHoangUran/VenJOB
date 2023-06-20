@@ -2,7 +2,7 @@
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
       <h2 class="text-center mb-4 text-primary">Forgot password?</h2>
-      <%= form_for(resource, as: resource_name, url: reset_password_url(resource_name), html: { method: :put }, data: {turbo: false}) do |f| %>
+      <%= form_for(resource, as: resource_name, url: reset_password_path(resource_name), html: { method: :put }) do |f| %>
         <%= f.hidden_field :reset_password_token %>
 
         <div class="mb-3">

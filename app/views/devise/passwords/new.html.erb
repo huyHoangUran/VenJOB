@@ -1,12 +1,8 @@
 
-
-
-
-
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
       <h2 class="text-center mb-4 text-primary">Forgot password?</h2>
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: forgot_password_path(resource_name), html: { method: :post }) do |f| %>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-info bg-opacity-10 border border-primary" %>
