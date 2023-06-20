@@ -11,7 +11,7 @@ h1.pt-5.d-flex.align-items-center.justify-content-center
     - @jobs.each do |job|
       div.row.p-3.mx-auto
         div.col-md-2.cols-border.d-flex.justify-content-center
-          = check_box_tag 'checkbox_name', 'checkbox_value' 
+            = radio_button_tag 'radio_name', 'radio_value'
         div.col-md-1
         div.col-md-6.cols-border
           h5.text-left 
