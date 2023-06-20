@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find_by(confirmation_token: params[:confirmation_token])
-
+    
     if @user.present? && @user.confirmed_at.nil?
       # Hiển thị form cập nhật thông tin người dùng
       render 'edit'
@@ -17,7 +17,36 @@ class UsersController < ApplicationController
       render json: { error: 'Confirmation token không hợp lệ' }, status: :unprocessable_entity
     end
   end
-  
+  def editInfo
+    if user_signed_in?
+      @user = current_user
+      
+      user_attributes = @user.attributes
+    end
+      render 'editInfo'
+  end
+
+  def updateInfo
+    @user = User.find(params[:user][:id])
+
+    if @user.valid_password?(params[:user][:old_password])
+      # Mật khẩu cũ khớp
+      if @user.update(user_params.except(:old_password))
+        # Cập nhật thông tin thành công
+        sign_in(@user, bypass: true) # Đăng nhập lại với thông tin người dùng mới nếu cập nhật mật khẩu
+        redirect_to my_path, notice: 'Cập nhật thông tin thành công.'
+      else
+        # Có lỗi xảy ra trong quá trình cập nhật
+        render :editInfor
+      end
+    else
+      # Mật khẩu cũ không khớp hoặc người dùng không tồn tại
+      @user.errors.add(:old_password, 'Mật khẩu cũ không đúng.')
+      render :editInfo
+    end
+  end
+
+
 
   def update
     @user = User.find_by(confirmation_token: params[:user][:confirmation_token])
@@ -42,10 +71,11 @@ class UsersController < ApplicationController
     end
   end
   
+  
   private
   
   def user_params
-    params.require(:user).permit(:password, :password_confirmation, :name, :my_cv)
+    params.require(:user).permit(:password, :password_confirmation, :old_password, :name, :email, :my_cv)
   end
 
   def confirmation_token_expired?

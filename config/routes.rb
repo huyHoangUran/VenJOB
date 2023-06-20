@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # Tránh xung đột với routes của Devise, đặt các routes của Users trước
   get 'my', to: 'users#show'
   get 'registration/3', to: 'users#edit'
+  get 'my/info', to: 'users#editInfo'
+  patch 'users/updateInfo', to: 'users#updateInfo'
   patch 'users/update', to: 'users#update', as: :update_user
   devise_for :users, controllers: {
     registrations: 'registrations',

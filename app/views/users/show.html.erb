@@ -7,13 +7,17 @@
   <div class="mb-3">
     <label for="email" class="form-label">Email</label>
     <input type="text" name="email" id="email" autofocus="true" autocomplete="name" value="<%= @user.name %>" class="form-control form-control-sm bg-info bg-opacity-10 border border-primary" readonly>
-  </div>
-  <p>CV: <%= link_to File.basename(@user.my_cv.path), @user.my_cv.url, target: '_blank', download: File.basename(@user.my_cv.path) %></p>
-  <div>
-  <div class="row">
-    <div col-md-4 >
-      <%= link_to 'My Page', my_path %>
+    <% if @user.my_cv.present? %>
+      <p>CV: <%= link_to File.basename(@user.my_cv.path), @user.my_cv.url, target: '_blank', download: File.basename(@user.my_cv.path) %></p>
+    <% else %>
+      <p>CV không tồn tại</p>
+    <% end %>
+    <div class="row">
+      <div  btn btn-danger >
+        <%= link_to 'Update', my_info_path, :class =>"col-md-4 btn btn-danger" %>
+        <%= link_to 'My Page', my_path, :class =>"col-md-4 btn btn-danger" %>
+      </div>
+      
     </div>
-  </div>
   </div>
 </div>
