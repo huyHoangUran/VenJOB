@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   }, path: '', path_names: {
     sign_in: 'log_in',
     sign_up: 'register/1',
-    password: 'password' # Thêm đoạn này để định nghĩa đường dẫn cho actions của PasswordsController
   }
   
   get 'search', to: 'jobs#search'
@@ -20,16 +19,8 @@ Rails.application.routes.draw do
     get 'register/2', to: 'registrations#thanks'
   end
   resources :favourites, only: [:create, :destroy, :index]
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  # Defines the root path route ("/")
   root 'jobs#index'
-
-  # get '/joblist', to: 'jobs#search', as: 'search'
-  # get 'search', to: 'jobs#perform_search', as: 'search_jobs'
   get 'city_jobs', to: 'jobs#city_jobs', as: :city_jobs
   get 'city_search', to: 'jobs#city_search', as: :city_search
-
-
 
 end

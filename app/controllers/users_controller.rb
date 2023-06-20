@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find_by(confirmation_token: params[:confirmation_token])
-    
+
     if @user.present? && @user.confirmed_at.nil?
       # Hiển thị form cập nhật thông tin người dùng
       render 'edit'
@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       render json: { error: 'Confirmation token không hợp lệ' }, status: :unprocessable_entity
     end
   end
+  
 
   def update
     @user = User.find_by(confirmation_token: params[:user][:confirmation_token])
