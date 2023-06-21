@@ -13,8 +13,12 @@
       <p>CV không tồn tại</p>
     <% end %>
     <div class="row">
-      <div  btn btn-danger >
-        <%= link_to 'Update', my_info_path, :class =>"col-md-4 btn btn-danger" %>
+      <div  class="btn btn-danger  col-md-4">
+        <%= link_to 'Update', edit_user_registration_path, :class =>"col-md-4 btn btn-danger" %>
+      </div>
+      <div  class="col-md-4">
+      </div>
+      <div  class="btn btn-danger  col-md-4">
         <%= link_to 'My Page', my_path, :class =>"col-md-4 btn btn-danger" %>
       </div>
       
