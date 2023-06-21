@@ -1,43 +1,56 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+<div class="vh-100 d-flex justify-content-center align-items-center">
+  <div class="col-md-4 p-5 shadow-sm border rounded-5 border-primary">
+    <h2 class="text-center mb-4 text-primary">My page</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control bg-info bg-opacity-10 border border-dark" %>
+        <% if @user.errors[:email].any? %>
+            <div class="text-danger mb-3">
+              <%= form_error_messages(@user, :email) %>
+            </div>
+          <% end %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :name, class: "form-label" %>
+        <%= f.text_field :name, class: "form-control bg-info bg-opacity-10 border border-primary" %>
+        <span class="error text-danger">
+              <% if @user.errors.has_key?(:name) %>
+                <%= @user.errors[:name].first %>
+              <% end %>
+            </span>
+      </div>
+      <div class="mb-3">
+        <%= f.label :password, class: "form-label" %>
+        <%= f.password_field :password, class: "form-control bg-info bg-opacity-10 border border-primary" %>
+        <% if @user.errors[:password].any? %>
+          <div class="text-danger mb-3">
+            <%= @user.errors.full_messages_for(:password).first %>
+          </div>
+        <% end %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :current_password, class: "form-label" %>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control bg-info bg-opacity-10 border border-primary" %>
+        <% if @user.errors[:current_password].any? %>
+          <div class="text-danger mb-3">
+            <%= @user.errors.full_messages_for(:current_password).first %>
+          </div>
+        <% end %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :my_cv, class: "form-label" %>
+        <%= f.file_field :my_cv, class: "form-control bg-info bg-opacity-10 border border-primary" %>
+        <% if @user.errors[:my_cv].any? %>
+          <div class="text-danger mb-3">
+            <%= @user.errors.full_messages_for(:my_cv).first %>
+          </div>
+        <% end %>
+      </div>
+      <div class="actions d-grid mb-3">
+        <%= f.submit 'Update', class: "btn btn-primary" %>
+      </div>
     <% end %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>
