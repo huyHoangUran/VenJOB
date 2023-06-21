@@ -17,7 +17,14 @@ Rails.application.routes.draw do
   resources :jobs
   resources :cities
   resources :industries
-  resources :applies
+  # resources :applies
+
+  get '/apply/:job_id', to: 'applies#apply', as: 'apply'
+  post '/submit_apply', to: 'applies#submit_apply'
+  get '/confirm', to: 'applies#confirm'
+  post '/submit_confirm', to: 'applies#submit_confirm'
+  get '/confirmation', to: 'applies#confirmation'
+
   devise_scope :user do
     get 'register/2', to: 'registrations#thanks'
   end

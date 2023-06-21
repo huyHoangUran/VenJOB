@@ -41,13 +41,13 @@ div.container
           = description
     .col-md-2.pt-5.pl-3
         div.text-right
-          = link_to 'Apply', new_apply_path(job_id: @job.id), class: "color-text d-flex align-items-center justify-content-center btn btn-outline-success btn-big"  
+          = link_to 'Apply', apply_path(job_id: @job.id), class: "color-text d-flex align-items-center justify-content-center btn btn-outline-success btn-big"  
           
     
 div.p-5.row.container.mx-auto
   .col-md-4
     div.text-center
-      =link_to "Apply", cities_path,class: "color-text btn btn-success btn-se"
+      = link_to 'Apply', apply_path(job_id: @job.id),class: "color-text btn btn-success btn-se"
   .col-md-4
   .col-md-4  
     - if current_user
