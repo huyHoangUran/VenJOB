@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :jobs
   resources :cities
   resources :industries
+  resources :applies
   devise_scope :user do
     get 'register/2', to: 'registrations#thanks'
   end
