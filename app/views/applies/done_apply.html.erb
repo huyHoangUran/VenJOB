@@ -1,0 +1,17 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "progressbar" %>
+<% end %>
+<div class="content-apply done">
+  <div class="arrow-steps clearfix p-5">
+    <div class="step "> <span > <a href="#"  >1</a></span> </div>
+    <div class="step "> <span><a href="#" >2</a></span> </div>
+    <div class="step current"> <span><a href="#" >3</a><span> </div>
+  </div>
+  
+   <div class="d-flex align-items-center justify-content-center">
+    <h2 class="apply-title">Thank you for apply</h2>
+  </div>
+  <div class=" pt-3 d-flex align-items-center justify-content-center">
+    <%=link_to 'Back to top page',root_path, class:'h3 finish-page'%>
+  </div>
+</div>

@@ -4,7 +4,7 @@ class AppliesController < ApplicationController
   def new_apply
     @apply = Apply.new
   end
-  
+
   def create_apply
     apply = Apply.new(apply_params)
     apply.job_id = session[:job_id]
@@ -17,6 +17,25 @@ class AppliesController < ApplicationController
     @apply = Apply.new
   end
   
+  def submit_apply
+    apply = Apply.new(submit_params)
+    apply_info = session[:apply]
+    apply_info["user_email"] = apply.email
+    apply_info["user_name"] = apply.user.name
+    apply_info["cv"] = 'http://127.0.0.1:3000'+apply.user.my_cv.url.to_s
+    apply_info["job_title"] = apply.job.name 
+    apply_info["job_location"] = apply.job.work_place
+    apply_info["company"] = apply.job.company_name 
+    apply.save!
+    session.delete(:apply)
+    session.delete(:job_id)
+    UserMailer.apply_confirmation(apply_info).deliver_later
+    redirect_to done_apply_path
+  end
+
+  def done_apply
+  end
+
   private
 
   def apply_params
