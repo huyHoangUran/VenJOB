@@ -20,7 +20,9 @@ Rails.application.routes.draw do
   # resources :applies
 
   get '/apply' => 'applies#new_apply', :as => :apply_job
-  
+  post '/apply' => 'applies#create_apply', :as => :create_apply
+  get '/confirm', to: 'applies#show_confirm', :as => :show_confirm_apply
+  post '/confirm', to: 'applies#submit_apply', :as => :submit_apply
 
   
   devise_scope :user do

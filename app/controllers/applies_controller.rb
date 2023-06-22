@@ -4,7 +4,18 @@ class AppliesController < ApplicationController
   def new_apply
     @apply = Apply.new
   end
+  
+  def create_apply
+    apply = Apply.new(apply_params)
+    apply.job_id = session[:job_id]
+    apply.user_id = current_user.id
+    session[:apply] = apply
+    redirect_to show_confirm_apply_path
+  end
 
+  def show_confirm
+    @apply = Apply.new
+  end
   
   private
 
