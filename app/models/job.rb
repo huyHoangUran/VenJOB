@@ -3,7 +3,7 @@ class Job < ApplicationRecord
   belongs_to :city
   belongs_to :industry
   has_many :favourites
-  has_many :applieds
+  has_many :applies
   attribute :type_job, :string, default: ''
   scope :latest_jobs, -> { order(created_at: :desc).limit(5) }
   def short_des

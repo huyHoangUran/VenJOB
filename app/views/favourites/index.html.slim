@@ -11,7 +11,7 @@ h1.pt-5.d-flex.align-items-center.justify-content-center
     - @jobs.each do |job|
       div.row.p-3.mx-auto
         div.col-md-2.cols-border.d-flex.justify-content-center
-            = radio_button_tag 'radio_name', 'radio_value'
+            = radio_button_tag 'job_id', job.job.id
         div.col-md-1
         div.col-md-6.cols-border
           h5.text-left 
@@ -46,8 +46,15 @@ h1.pt-5.d-flex.align-items-center.justify-content-center
               = link_to 'Favourite', new_user_session_path, class: 'btn btn-success'
     div.row
       div.col-12.text-center.mt-4.pb-5
-        = link_to 'Apply', '#', class: 'btn btn-primary btn-se'
+        = link_to 'Apply', '#', id: 'apply-button', class: 'color-text btn btn-success btn-se'
    
 - else
     p
       | Không có công việc trong thành phố này.
+javascript:
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('apply-button').addEventListener('click', function() {
+      var selectedJobId = document.querySelector('input[name="job_id"]:checked').value;
+      window.location.href = '/apply?job_id=' + selectedJobId;
+    });
+  });

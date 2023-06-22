@@ -1,34 +1,18 @@
 class AppliesController < ApplicationController
-  def apply
-    @user = current_user
-    @job_id = params[:job_id] # Lấy ID của job từ URL hoặc thông qua tham số truyền vào
+  before_action :authenticate_user!
+
+  def new_apply
+    @apply = Apply.new
   end
+
   
-  def submit_apply
-    # Lưu dữ liệu từ Form 1 vào cơ sở dữ liệu
-    @user = current_user
-    @user.fullname = params[:fullname]
-    @user.email = params[:email]
-    @user.save
+  private
 
-    redirect_to confirm_path
+  def apply_params
+    params.require(:apply).permit(:email, :fullname, :cv, :job_id, :user_id)
   end
 
-  def confirm
-    @user = current_user
-  end
-
-  def submit_confirm
-    # Lưu dữ liệu từ Form 2 vào cơ sở dữ liệu
-    @user = current_user
-    @user.fullname = params[:fullname]
-    @user.email = params[:email]
-    @user.save
-
-    redirect_to confirmation_path
-  end
-
-  def confirmation
-    # Hiển thị thông báo hoàn tất
+  def submit_params
+    params.require(:apply).permit(:email, :fullname, :cv, :job_id, :user_id)
   end
 end

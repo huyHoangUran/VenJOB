@@ -37,6 +37,7 @@ class JobsController < ApplicationController
   end
   def show
     @job = Job.find(params[:id])
+    session[:job_id] = @job.id
   end
   
 end  
