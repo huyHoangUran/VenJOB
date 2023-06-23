@@ -1,0 +1,44 @@
+- content_for :stylesheet do
+  = stylesheet_link_tag "topPage"
+- content_for :stylesheet do
+  = stylesheet_link_tag "jobList"
+- content_for :stylesheet do
+  = stylesheet_link_tag "frjob"
+h1.pt-5.d-flex.align-items-center.justify-content-center 
+  | My Favourtites Job
+
+- if @histories.present?
+    - @histories.each do |job|
+      div.row.p-3.mx-auto
+        div.col-md-2.cols-border.d-flex.justify-content-center
+            = radio_button_tag 'job_id', job.job.id
+        div.col-md-1
+        div.col-md-8.cols-border
+          h5.text-left 
+            | Job title:  
+            = link_to job.job.name, job_path(job.job.id)
+          p
+            | Description: 
+            - if job.job.short_des.present?
+              = job.job.short_des + " ....."
+          p
+            | Location: 
+            = job.job.company_district.present? ? job.job.company_district + "," : ""
+            = job.job.work_place.present? ? job.job.work_place : ""
+          p 
+            | Salary: 
+            = job.job.salary
+    div.row
+      div.col-12.text-center.mt-4.pb-5
+        = link_to 'Apply', '#', id: 'apply-button', class: 'color-text btn btn-success btn-se'
+   
+- else
+    p
+      | Không có công việc trong thành phố này.
+javascript:
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('apply-button').addEventListener('click', function() {
+      var selectedJobId = document.querySelector('input[name="job_id"]:checked').value;
+      window.location.href = '/apply?job_id=' + selectedJobId;
+    });
+  });

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_22_070319) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_204038) do
   create_table "applies", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "user_id"
     t.string "fullname"
@@ -31,6 +31,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_070319) do
   end
 
   create_table "favourites", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "histories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "job_id"
     t.datetime "created_at", null: false

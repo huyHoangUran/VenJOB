@@ -41,7 +41,9 @@
                 <div class="col btn btn-success ms-3">
                   <%= link_to 'My Page', my_path %>
                 </div>
-                <div class="col btn btn-success ms-3">History</div>
+                <div class="col btn btn-success ms-3">
+                  <%= link_to 'History', histories_path %>
+                </div>
               </div>
             <% else %>
               <div class="row flex-nowrap">
@@ -55,7 +57,9 @@
                   <%= link_to 'Register', new_user_registration_path %>
                 </div>
                 
-                <div class="col btn btn-success ms-3">History</div>
+                <div class="col btn btn-success ms-3">
+                  <%= link_to 'History', new_user_session_path %>
+                </div>
               </div>
             <% end %>
           </div>
@@ -68,7 +72,6 @@
           Degign by hoangnh <%= link_to '|     ZIGExN VeNtura		2023', jobs_path %>
         </div>
       </section>
-
     </div>
   </body>
 </html>

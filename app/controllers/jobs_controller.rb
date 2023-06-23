@@ -38,6 +38,19 @@ class JobsController < ApplicationController
   def show
     @job = Job.find(params[:id])
     session[:job_id] = @job.id
+    user = current_user
+    if user.histories.exists?(job_id: @job.id)
+      # Nếu đã tồn tại, cập nhật lại trường updated_at của bản ghi
+      user.histories.find_by(job_id: @job.id).touch
+      # Kết thúc action
+      return
+    end
+    if user.histories.count >= 20
+      old_history = user.histories.order(updated_at: :asc).first
+      old_history.destroy
+    end
+    user.histories.create(job: @job, user_id: current_user.id)
+    # Các xử lý khác cho action sho
   end
   
 end  

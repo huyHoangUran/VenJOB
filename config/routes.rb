@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   get '/confirm', to: 'applies#show_confirm', :as => :show_confirm_apply
   post '/confirm', to: 'applies#submit_apply', :as => :submit_apply
   get '/done', to: 'applies#done_apply', :as => :done_apply
+  resources :histories
+
+
   devise_scope :user do
     get 'register/2', to: 'registrations#thanks'
   end
