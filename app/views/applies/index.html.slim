@@ -1,0 +1,37 @@
+- content_for :stylesheet do
+  = stylesheet_link_tag "topPage"
+- content_for :stylesheet do
+  = stylesheet_link_tag "jobList"
+
+.div.container.pt-5
+  h1.d-flex.align-items-center.justify-content-center.p-3 
+    | Applied jobs
+  - if @applied_jobs.present?
+    - @applied_jobs.each do |job|
+      div.row.pb-3.mx-auto
+        div.col-md-12.cols-border
+          h5.text-left 
+            |Job title: 
+            = link_to job.job.name, job_path(job.id)
+          p
+            | Short Description: 
+            - if job.job.short_des.present?
+              = job.job.short_des + " ....."
+          div.row
+            p.col-md-3
+              | Location: 
+              = job.job.company_district.present? ? job.job.company_district + "," : ""
+              = job.job.work_place.present? ? job.job.work_place : ""
+            p.col-md-3 
+              | Salary: 
+              = job.job.salary
+            p.col-md-4
+              | Applied At: 
+              = job.job.created_at.strftime("%H:%M:%S %d/%m/%Y")
+
+  - else
+  p
+    | Không có công việc trong thành phố này.
+
+
+
