@@ -12,7 +12,6 @@ Rails.application.routes.draw do
     sign_in: 'log_in',
     sign_up: 'register/1',
   }
-  
   get 'search', to: 'jobs#search'
   resources :jobs
   resources :cities

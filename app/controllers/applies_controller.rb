@@ -2,6 +2,7 @@ class AppliesController < ApplicationController
   before_action :authenticate_user!
   def index
     @applied_jobs = current_user.applies
+
   end
   
   def new_apply
@@ -28,7 +29,7 @@ class AppliesController < ApplicationController
     apply_info["cv"] = 'http://127.0.0.1:3000'+apply.user.my_cv.url.to_s
     apply_info["job_title"] = apply.job.name 
     apply_info["job_location"] = apply.job.work_place
-    apply_info["company"] = apply.job.company_name 
+    apply_info["company"] = apply.job.company_name
     apply.save!
     session.delete(:apply)
     session.delete(:job_id)

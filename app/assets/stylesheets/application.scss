@@ -62,3 +62,19 @@ a{
   width: 293px;
 }
 
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  flex-shrink: 0;
+  width: 100px; /* Điều chỉnh kích thước của label theo ý muốn */
+  margin-right: 10px;
+}
+
+.form-row input[type="text"] {
+  flex-grow: 1;
+  width: 100%;
+}

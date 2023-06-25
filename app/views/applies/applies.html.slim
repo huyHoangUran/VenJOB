@@ -1,0 +1,59 @@
+
+div.container.pt-5
+  div.row.pb-3.mx-auto
+    div.col-md-12.cols-border-s
+      = form_with(url: search_jobs_applies_path, method: :get) do |f|
+        .mb-3.a-line
+          label.form-label[for="email"]
+            | EMAIL ADDRESS:
+          = f.email_field :email, class: "form-control"
+        
+        .mb-3.a-line
+          label.form-label[for="city_name"]
+            | CITY:
+          = f.select :city_name, options_for_select(@cities.map { |city| city = city['name'] }), prompt: "Select a city", class: "form-control"
+        
+        .mb-3.a-line
+          label.form-label[for="industry_name"]
+            | INDUSTRY:
+          = f.select :industry_name, options_for_select(@industries.map { |industry| industry = industry['name'] }), prompt: "Select an industry", class: "form-control"
+        
+        .mb-3.a-line
+          label.form-label[for="date_from"]
+            | DATE:
+          = f.datetime_field :date_from, class: "form-control"
+          span |
+          = f.datetime_field :date_to, class: "form-control"
+        
+        .block-btn
+          = f.submit "SEARCH", class: "apply-btn background-green"
+
+  h1.d-flex.align-items-center.justify-content-center.p-3 
+    | Applied jobs
+  - if @applied_jobs.present?
+    - @applied_jobs.each do |job|
+      div.row.pb-3.mx-auto
+        div.col-md-12.cols-border
+          h5.text-left 
+            |Job title: 
+            = link_to job.job.name, job_path(job.id)
+          p
+            | Candidate name: 
+            - if job.fullname.present?
+              = job.fullname
+          p
+            | Candidate CV: 
+            = job.cv.present?
+            = job.cv
+          div.row
+            p.col-md-6
+              | Candidate email: 
+              = job.email
+            p.col-md-4
+              | Applied At: 
+              = job.created_at.strftime("%H:%M:%S %d/%m/%Y")
+    = paginate @applied_jobs, theme: 'bootstrap-5'    
+  - else
+    p
+      | Không tìm thấy
+
