@@ -9,7 +9,7 @@
 
   <div class="apply-form">
     <h2 class="apply-title">APPLY FORM</h2>
-    <%= form_for(@apply, url: create_apply_path, method: :post) do |f| %>
+    <%= form_for(@apply, url: create_apply_path, method: :post, data: { turbo: false }) do |f| %>
       <div class="mb-3 a-line">
         <label for="exampleInputFullName" class="form-label">FULL NAME:</label>
         <%= f.text_field :fullname, value: "#{current_user.name}" , class: "form-control" %>
@@ -21,16 +21,14 @@
       <div class="mb-3 a-line">
         <label for="exampleInputEmail1" class="form-label">CV:</label>
         <% if current_user.my_cv.present? %>
-          <%= f.hidden_field :cv, value: "#{File&.basename(current_user.my_cv&.url)}"%>
-          <%= link_to "Download CV #{File&.basename(current_user.my_cv&.url.to_s)}", current_user.my_cv&.url, download: true , id: 'exampleInputEmail1' ,class: 'form-control fs1-6 none-underline' %>
-        <%else%>
-          <input type="email" value="Chưa có CV" class="form-control none-underline" id="exampleInputEmail1" aria-describedby="emailHelp" readonly=true>
-        <%end%>
+          <%= f.hidden_field :cv, value: File.basename(current_user.my_cv.url) %>
+          <%= link_to "Download CV #{File.basename(current_user.my_cv.url.to_s)}", current_user.my_cv.url, download: true, id: 'exampleInputEmail1', class: 'form-control fs1-6 none-underline' %>
+        <% else %>
+          <%= link_to "Cập nhật CV", edit_user_registration_path, id: 'exampleInputEmail1', class: 'form-control none-underline' %>
+        <% end %>
       </div>
       <% if current_user.my_cv.present? %>
-        <%= f.submit "Confirm", class: "apply-btn btn-w100"%>
-      <%else%>
-        <%= link_to 'Confirm' , apply_job_path , class: 'apply-btn btn-w100'%>
+        <%= f.submit "Confirm", class: "btn  btn-outline-success btn-w100"%>
       <%end%>
     <%end%>
   </div>

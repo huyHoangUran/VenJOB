@@ -24,8 +24,8 @@
         <%= f.text_field :cv, value: "#{session[:apply]['cv']}" , class: "form-control" , readonly: true %>
       </div>
       <div class="block-btn ">
-        <%= link_to 'EDIT' , apply_job_path , class: 'apply-btn btn-link background-yellow'%>
-        <%= f.submit "DONE", class: "apply-btn background-green" %>
+        <%= link_to 'EDIT' , apply_job_path , class: 'btn btn-danger m-2 '%>
+        <%= f.submit "DONE", class: "btn btn-success background-green" %>
       </div>
     <%end%>
   </div>

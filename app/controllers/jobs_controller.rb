@@ -54,5 +54,8 @@ class JobsController < ApplicationController
     end
     # Các xử lý khác cho action sho
   end
+  def user_already_applies?
+    @job.user_already_applied?(current_user) # Sử dụng phương thức đã được định nghĩa trong model Job
+  end
   
 end  

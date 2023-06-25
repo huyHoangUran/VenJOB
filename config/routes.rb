@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :cities
   resources :industries
   # resources :applies
-
+  get '/my/jobs', to: 'applies#index'
   get '/apply' => 'applies#new_apply', :as => :apply_job
   post '/apply' => 'applies#create_apply', :as => :create_apply
   get '/confirm', to: 'applies#show_confirm', :as => :show_confirm_apply
