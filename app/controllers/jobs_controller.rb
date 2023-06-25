@@ -52,5 +52,8 @@ class JobsController < ApplicationController
     user.histories.create(job: @job, user_id: current_user.id)
     # Các xử lý khác cho action sho
   end
+  def user_already_applies?
+    @job.user_already_applied?(current_user) # Sử dụng phương thức đã được định nghĩa trong model Job
+  end
   
 end  

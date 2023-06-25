@@ -41,22 +41,30 @@ div.container
           = description
     .col-md-2.pt-5.pl-3
         div.text-right
-          = link_to apply_job_path(job_id: @job.id), class: "color-text d-flex align-items-center justify-content-center btn btn-outline-success btn-big"  
-            i.fa-solid.fa-check
-            | APPLY JOB
-          
+          - if @job.user_already_applied?(current_user)
+            = link_to apply_job_path(job_id: @job.id), class: "color-text d-flex align-items-center justify-content-center btn btn-outline-danger btn-big disabled"  
+              i.fa-solid.fa-check
+              | APPLIED JOB
+          - else 
+            = link_to apply_job_path(job_id: @job.id), class: "color-text d-flex align-items-center justify-content-center btn btn-outline-success btn-big"  
+              i.fa-solid.fa-check
+              | APPLY JOB
     
 div.p-5.row.container.mx-auto
   .col-md-4
     div.text-center
-      = link_to 'Apply', apply_job_path(job_id: @job.id),class: "color-text btn btn-success btn-se"
+      - if @job.user_already_applied?(current_user)
+          = link_to 'Applied', apply_job_path(job_id: @job.id), class: "color-text btn btn-danger btn-se disabled"
+      - else
+          = link_to 'Apply', apply_job_path(job_id: @job.id), class: "color-text btn btn-success btn-se"
+
   .col-md-4
   .col-md-4  
     - if current_user
       - if current_user.favourites.exists?(job_id: @job.id)
         = form_with(url: favourite_path(current_user.favourites.find_by(job_id: @job.id)), method: :delete, local: true) do |form|
           = form.button class: 'btn btn-danger btn-se"', data: { confirm: 'Are you sure?' } do
-            | Delete
+            | Remove on Favourites
       - else
         = form_with(url: favourites_path, method: :post, local: true) do |form|
           = form.hidden_field :user_id, value: current_user.id

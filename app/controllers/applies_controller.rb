@@ -6,6 +6,10 @@ class AppliesController < ApplicationController
   
   def new_apply
     @apply = Apply.new
+    if current_user.my_cv.blank?
+      flash[:notice] = "Bạn cần cập nhật CV trước khi thực hiện ứng tuyển."
+      redirect_to edit_user_registration_path
+    end
   end
 
   def create_apply
