@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   get '/admin/login', to: 'admin_sessions#new', as: 'admin_login'
   post '/admin/login', to: 'admin_sessions#create'
   delete '/admin/logout', to: 'admin_sessions#destroy', as: 'admin_logout'
-  get '/admin/index', to: 'admin_sessions#index'
-
+  get '/admin/applies', to: 'admin_sessions#index'
+  get 'search_jobs', to: 'admin_sessions#search_jobs'
+  
+  
   # Tránh xung đột với routes của Devise, đặt các routes của Users trước
   get 'my', to: 'users#show'
   get 'registration/3', to: 'users#edit'

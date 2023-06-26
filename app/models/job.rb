@@ -31,7 +31,7 @@ class Job < ApplicationRecord
     name.present? ? name[0, 20] : ""
   end
   
-  def user_already_applied?(user)
-    applies.exists?(user_id: user.id)
+  def user_already_applied?(user) 
+    user.present? && applies.exists?(user_id: user.id)
   end
 end

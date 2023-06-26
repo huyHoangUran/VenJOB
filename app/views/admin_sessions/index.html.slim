@@ -1,10 +1,9 @@
-
 div.container.pt-5
   div.row.pb-3.mx-auto
     div.col-md-12.cols-border-s
-      = form_with(url: search_jobs_applies_path, method: :get) do |f|
+      = form_with(url: search_jobs_path, method: :get) do |f|
         .mb-3.a-line
-          label.form-label[for="email"]
+          label.form-label[for="email"] 
             | EMAIL ADDRESS:
           = f.email_field :email, class: "form-control"
         
@@ -26,7 +25,7 @@ div.container.pt-5
           = f.datetime_field :date_to, class: "form-control"
         
         .block-btn
-          = f.submit "SEARCH", class: "apply-btn background-green"
+        = f.submit "SEARCH", class: "apply-btn background-green"
 
   h1.d-flex.align-items-center.justify-content-center.p-3 
     | Applied jobs

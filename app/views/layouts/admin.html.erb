@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shop</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= yield :stylesheet %>
+  </head>
+
+  <body>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <% if alert.present? %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Error</strong> <%= alert %>
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="row mx-auto ">
+          <div class="col-3 p-0">
+            <%= link_to image_tag('/images/cover-fb-1m-1.webp', class: 'img img-fluid logo'), jobs_path %>
+          </div>
+
+          <div class="col-6 "></div>
+          <div class="col-2 d-flex flex-column justify-content-center ">
+            <%= form_with url: admin_logout_path, method: :delete do |form| %>
+              <%= form.submit 'Đăng xuất' , class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+          
+      </div>
+      <%= yield %>
+    </div>
+    <div class="pt-5">
+      <section id="copy-right">
+        <div class="copy-right-sec"><i class="fa-solid fa-copyright"></i>  
+          Degign by hoangnh <%= link_to '|     ZIGExN VeNtura		2023', jobs_path %>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
