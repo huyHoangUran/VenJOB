@@ -5,8 +5,8 @@
     <input type="text" name="email" id="email" autofocus="true" autocomplete="name" value="<%= @user.email %>" class="form-control form-control-sm bg-info bg-opacity-10 border border-primary" readonly> 
   </div>
   <div class="mb-3">
-    <label for="email" class="form-label">Email</label>
-    <input type="text" name="email" id="email" autofocus="true" autocomplete="name" value="<%= @user.name %>" class="form-control form-control-sm bg-info bg-opacity-10 border border-primary" readonly>
+    <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" id="email" autofocus="true" autocomplete="name" value="<%= @user.name %>" class="form-control form-control-sm bg-info bg-opacity-10 border border-primary" readonly>
     <% if @user.my_cv.present? %>
       <p>CV: <%= link_to File.basename(@user.my_cv.path), @user.my_cv.url, target: '_blank', download: File.basename(@user.my_cv.path) %></p>
     <% else %>

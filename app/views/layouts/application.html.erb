@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Shop</title>
+    <title>VenJOB</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,7 +13,12 @@
 
   <body>
     <div class="container">
-      <p class="notice"><%= notice %></p>
+      
+      <% if notice.present? %>
+        <div class="alert alert-success" role="alert">
+          <%= notice %>
+        </div>
+      <% end %>
       <% if alert.present? %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>Error</strong> <%= alert %>
@@ -37,6 +42,11 @@
                 </div>
                 <div class="col btn btn-success ms-3">
                   <%= link_to 'Favourites', favourites_path %>
+                  <% if user_signed_in? %>
+                    <% favourite_count = current_user.favourites.count %>
+                    <% favourite_count_text = favourite_count.zero? ? '0' : favourite_count.to_s %>
+                    <span class="favourite-count "><%= favourite_count_text %></span>
+                  <% end %>
                 </div>
                 <div class="col btn btn-success ms-3">
                   <%= link_to 'My Page', my_path %>
@@ -51,7 +61,7 @@
                   <%= link_to 'Sign in', new_user_session_path %>
                 </div>
                 <div class="col btn btn-success ms-3">
-                  <%= link_to 'Favourites', new_user_session_path %>
+                  <%= link_to 'Favourites (0)', new_user_session_path %>
                 </div>
                 <div class="col btn btn-success ms-3">
                   <%= link_to 'Register', new_user_registration_path %>
@@ -66,5 +76,6 @@
       </div>
       <%= yield %>
     </div>
+
   </body>
 </html>

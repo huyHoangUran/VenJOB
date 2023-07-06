@@ -33,14 +33,19 @@
       div.row.pb-3.mx-auto
         div.col-md-9.cols-border
           h5.text-left 
+            | Job title: 
             = link_to job.name, job_path(job.id)
           p
+            | Job description: 
             - if job.short_des.present?
               = job.short_des + " ....."
           p
+            | Job location: 
             = job.company_district.present? ? job.company_district + "," : ""
             = job.work_place.present? ? job.work_place : ""
-        div.col-md-1 
+          p 
+            | Salary: 
+            = job.salary
         .col-md-2.d-flex.align-items-center.justify-content-center.cols-border 
           p
             - if current_user
@@ -61,6 +66,5 @@
     p
       | Không có công việc trong thành phố này.
 div.container
-  = paginate @jobs, theme: 'bootstrap-5'
 
 

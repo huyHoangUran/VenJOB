@@ -38,7 +38,8 @@ div
     - @top_cities.each do |item|
       .col-md-4.justify-content-center.pb-3
         .single_company.border.mx-auto
-          = link_to item.name, city_search_path(city_name: item.name),:class =>"color-text "
+          h2 
+            = link_to item.name, city_search_path(city_name: item.name),:class =>"color-text "
           p
             = item.job_count
   div.row.p-5

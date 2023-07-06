@@ -25,8 +25,8 @@ div.container.pt-5
           = f.datetime_field :date_to, class: "form-control"
         
         .block-btn
-        = f.submit "SEARCH", class: "apply-btn background-green"
-
+        = f.submit "SEARCH", class: "btn btn-success"
+        = link_to 'Export as CSV', search_jobs_path(export_csv: true), class: 'btn btn-primary'
   h1.d-flex.align-items-center.justify-content-center.p-3 
     | Applied jobs
   - if @applied_jobs.present?

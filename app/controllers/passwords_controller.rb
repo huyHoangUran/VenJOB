@@ -12,11 +12,16 @@
       self.resource = resource_class.new
       set_minimum_password_length
     
-      reset_password_token = params[:reset_password_token]
-      @user = resource_class.with_reset_password_token(params[:reset_password_token])
+      reset_password_token = params[:token]
+      @user = resource_class.with_reset_password_token(params[:token])
       @user_email = @user&.email if @user
-      resource.reset_password_token = params[:reset_password_token]
+      resource.reset_password_token = params[:token]
     end
 
-    
+    def assert_reset_token_passed
+      if params[:token].blank?
+        set_flash_message(:alert, :no_token)
+        redirect_to new_session_path(resource_name)
+      end
+    end
   end

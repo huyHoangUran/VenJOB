@@ -1,8 +1,6 @@
   class AdminSessionsController < ApplicationController
     layout 'admin', only: :index
-
-    
-
+    require 'csv'
     def index
       if session[:admin_id].nil?
         redirect_to admin_login_path, notice: "Bạn cần đăng nhập để truy cập trang này."
@@ -36,7 +34,7 @@
       end
 
       if !@user_find.nil? && params[:date_from].present? && params[:date_to].present?
-        applied = @user_find.applies.where(created_at: params[:date_from]..params[:date_to])
+        applied = Apply.where(user_id: @user_find.user_id).where(created_at: params[:date_from]..params[:date_to])
       elsif !@user_find.nil? && params[:date_from].blank? && params[:date_to].blank?
         applied = Apply.where(email: params[:email])
       elsif @user_find.nil? && params[:date_from].present? && params[:date_to].present?
@@ -70,6 +68,23 @@
       $ids_applied = @results.map(&:id)
       @results = Kaminari.paginate_array(@results).page(params[:page]).per(10)
       @applied_jobs = @results
+      if params[:export_csv].present?
+        filename = "applied_jobs_#{Time.now.strftime('%Y%m%d%H%M%S')}.csv"
+        csv_data = CSV.generate(headers: true) do |csv|
+          csv << ['Job Title', 'Company', 'City', 'Industry', 'Email', 'Applied At']
+          @results.each do |apply|
+            csv << [
+              apply.job.name,
+              apply.job.company_name,
+              apply.email,
+              apply.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            ]
+          end
+        end
+    
+        send_data csv_data, filename: filename, type: 'text/csv', disposition: 'attachment'
+        return
+      end
       render :index
     end
 
