@@ -34,7 +34,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/solr
-/lib/seeds
-/test
+
+/lib/seeds/
+test
 index.html
